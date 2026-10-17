@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Anti-Cache Directives (Prevents Browser Stale Code Issues) -->
+  <!-- Anti-Cache Directives -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <title>TJP YouTube SEO Studio | Rank Engine Workspace</title>
+  <title>TJP YouTube SEO Studio | Elite Creator Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -18,9 +18,10 @@
       --brand: #fd5d5d;
       --brand-hover: #e04848;
       --brand-glow: rgba(253, 93, 93, 0.22);
-      --bg-dark: #0a0d14;
-      --panel-bg: #121824;
-      --panel-border: #1e293b;
+      --bg-dark: #090c13;
+      --panel-bg: #111723;
+      --panel-border: #1e283b;
+      --card-bg: #0b0f19;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --accent-green: #10b981;
@@ -42,7 +43,7 @@
 
     /* Top Navigation Header */
     header {
-      background: rgba(18, 24, 36, 0.85);
+      background: rgba(17, 23, 35, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--panel-border);
       padding: 0.85rem 2rem;
@@ -113,67 +114,177 @@
       transition: all 0.2s;
     }
 
-    .admin-btn:hover {
-      color: #fff;
-      border-color: var(--brand);
+    .admin-btn:hover { color: #fff; border-color: var(--brand); }
+
+    /* Studio Tab Switcher */
+    .tab-bar-container {
+      background: #0d121c;
+      border-bottom: 1px solid var(--panel-border);
+      padding: 0 2rem;
     }
 
-    /* Workspace Grid */
+    .tab-bar {
+      max-width: 1500px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.9rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { color: #fff; }
+    .tab-btn.active {
+      color: #fff;
+      border-bottom-color: var(--brand);
+    }
+
+    .tab-btn .badge-sprint {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      background: #1e283b;
+      color: var(--text-muted);
+    }
+
+    .tab-btn.active .badge-sprint {
+      background: rgba(253, 93, 93, 0.15);
+      color: var(--brand);
+    }
+
+    /* Main Container */
     main {
       flex: 1;
-      display: grid;
-      grid-template-columns: 420px 1fr;
-      gap: 1.5rem;
-      padding: 1.5rem 2rem;
-      max-width: 1700px;
+      max-width: 1500px;
       margin: 0 auto;
       width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    @media (max-width: 1024px) {
-      main { grid-template-columns: 1fr; }
-    }
-
-    .panel {
+    /* Tool Card Layout */
+    .studio-panel {
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.75rem;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
 
-    .panel-header {
+    .studio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       border-bottom: 1px solid var(--panel-border);
-      padding-bottom: 0.75rem;
+      padding-bottom: 1rem;
     }
 
-    .panel-header h2 { font-size: 1.05rem; font-weight: 700; }
-    .panel-header p { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .studio-title-area {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
 
-    .field-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .studio-title-area h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
 
-    input[type="text"], input[type="number"], select, textarea {
+    .tooltip-icon {
+      background: #1a2333;
+      color: var(--text-muted);
+      border: 1px solid var(--panel-border);
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .tooltip-icon:hover {
+      border-color: var(--brand);
+      color: #fff;
+    }
+
+    .tooltip-box {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 130%;
+      left: 0;
+      background: #182232;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      width: 280px;
+      color: var(--text-main);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      z-index: 100;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      transition: all 0.2s;
+    }
+
+    .tooltip-icon:hover .tooltip-box {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Search Bar Form */
+    .search-bar-grid {
+      display: grid;
+      grid-template-columns: 1fr 220px 180px;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .search-bar-grid { grid-template-columns: 1fr; }
+    }
+
+    input[type="text"], select {
       width: 100%;
-      background: #090d16;
+      background: var(--card-bg);
       border: 1px solid var(--panel-border);
       border-radius: 8px;
       color: #fff;
       font-family: inherit;
-      font-size: 0.9rem;
-      padding: 0.7rem 0.9rem;
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus, select:focus {
       border-color: var(--brand);
       box-shadow: 0 0 0 3px var(--brand-glow);
     }
-
-    textarea { resize: vertical; min-height: 95px; font-size: 0.85rem; line-height: 1.4; }
 
     .btn-primary {
       background: var(--brand);
@@ -190,154 +301,258 @@
       gap: 0.5rem;
       transition: all 0.2s;
       box-shadow: 0 4px 18px var(--brand-glow);
+      white-space: nowrap;
     }
 
     .btn-primary:hover { background: var(--brand-hover); }
 
-    .dashboard-grid { display: flex; flex-direction: column; gap: 1.25rem; }
-    .card { background: #0d121c; border: 1px solid var(--panel-border); border-radius: 10px; padding: 1.2rem; }
-    .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; }
-    .card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+    /* Studio 1 Results Grid */
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+    }
 
-    .copy-btn {
+    @media (max-width: 1050px) {
+      .results-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    /* Keyword Expander Table/List */
+    .keyword-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 460px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+
+    .keyword-row {
+      background: #121824;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      transition: border-color 0.15s;
+    }
+
+    .keyword-row:hover { border-color: rgba(253, 93, 93, 0.4); }
+
+    .kw-text {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .kw-badges {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .badge-metric {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .badge-metric.score { background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); }
+    .badge-metric.comp-green { background: rgba(16, 185, 129, 0.12); color: var(--accent-green); }
+    .badge-metric.comp-yellow { background: rgba(245, 158, 11, 0.12); color: var(--accent-yellow); }
+    .badge-metric.comp-red { background: rgba(253, 93, 93, 0.12); color: var(--brand); }
+    .badge-metric.trend-breakout { background: rgba(253, 93, 93, 0.2); color: #fda4af; }
+    .badge-metric.trend-rising { background: rgba(16, 185, 129, 0.2); color: #86efac; }
+    .badge-metric.trend-evergreen { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; }
+
+    .copy-btn-sm {
       background: transparent;
       border: 1px solid var(--panel-border);
       color: var(--text-muted);
-      border-radius: 6px;
-      padding: 0.25rem 0.6rem;
-      font-size: 0.75rem;
+      border-radius: 5px;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.7rem;
       cursor: pointer;
       transition: all 0.15s;
     }
 
-    .copy-btn:hover { border-color: var(--brand); color: #fff; }
+    .copy-btn-sm:hover { border-color: var(--brand); color: #fff; }
 
-    .title-item {
-      background: #141c2a;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+    /* Reassurance Notice Banner */
+    .reassurance-banner {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
       border-radius: 8px;
-      padding: 0.8rem 1rem;
-      margin-bottom: 0.6rem;
+      padding: 0.75rem 0.9rem;
+      font-size: 0.8rem;
+      color: #bae6fd;
+      line-height: 1.45;
+    }
+
+    /* Smart Tag Chips */
+    .tag-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      background: #090d16;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+    }
+
+    .tag-chip {
+      font-size: 0.78rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      background: #141c2a;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tag-chip:hover { border-color: var(--brand); }
+    .tag-chip.selected {
+      background: rgba(253, 93, 93, 0.15);
+      border-color: var(--brand);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .tag-actions-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    .title-text { font-size: 0.92rem; font-weight: 600; color: #fff; }
-    .title-badges { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
-    .tier-badge-label { font-size: 0.7rem; background: #1e293b; padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-muted); }
-    .score-badge { font-size: 0.7rem; font-family: var(--font-mono); font-weight: 700; background: rgba(253, 93, 93, 0.15); color: var(--brand); padding: 0.2rem 0.5rem; border-radius: 4px; }
+    .char-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
 
-    .pill-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .pill { font-size: 0.78rem; padding: 0.35rem 0.75rem; border-radius: 6px; background: #162030; border: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; }
-    .pill.gap-critical { border-color: rgba(253, 93, 93, 0.5); color: #fda4af; background: rgba(253, 93, 93, 0.1); }
+    .char-badge strong { color: var(--accent-green); }
+    .char-badge.warning strong { color: var(--brand); }
 
-    .tag-box { font-family: var(--font-mono); font-size: 0.8rem; background: #090d16; border: 1px solid var(--panel-border); border-radius: 8px; padding: 0.75rem; color: #94a3b8; max-height: 90px; overflow-y: auto; word-break: break-all; }
-    .char-counter { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+    /* Hashtags Box */
+    .hashtags-box {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-blue);
+      background: #090d16;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      line-height: 1.6;
+      word-break: break-all;
+    }
 
-    pre.desc-preview { background: #090d16; border: 1px solid var(--panel-border); border-radius: 8px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap; max-height: 220px; overflow-y: auto; line-height: 1.5; }
+    /* "Why This Exists" FAQ Accordion */
+    .faq-accordion {
+      background: var(--card-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-    .brief-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
-    @media (max-width: 768px) { .brief-grid { grid-template-columns: 1fr; } }
-    .brief-item { background: #141c2a; border-radius: 8px; padding: 0.8rem; font-size: 0.8rem; line-height: 1.4; }
-    .brief-item strong { display: block; color: var(--brand); font-size: 0.75rem; margin-bottom: 0.3rem; text-transform: uppercase; }
+    .faq-header {
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-header:hover { color: var(--brand); }
+
+    .faq-body {
+      padding: 0 1.25rem 1.25rem 1.25rem;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      display: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 1rem;
+    }
+
+    .faq-accordion.active .faq-body { display: block; }
+    .faq-accordion.active .faq-arrow { transform: rotate(180deg); color: var(--brand); }
+    .faq-arrow { transition: transform 0.2s; font-size: 0.8rem; }
 
     /* Admin Modal */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100;
     }
-
     .modal-overlay.active { display: flex; }
-
     .admin-card {
-      background: #121824;
-      border: 1px solid var(--panel-border);
-      border-radius: 14px;
-      width: 100%;
-      max-width: 580px;
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      background: #121824; border: 1px solid var(--panel-border); border-radius: 14px;
+      width: 100%; max-width: 580px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem;
     }
-
-    .admin-actions-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-
+    .admin-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .admin-btn-action {
-      background: #1a2333;
-      border: 1px solid var(--panel-border);
-      color: #fff;
-      padding: 0.65rem 0.9rem;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
+      background: #1a2333; border: 1px solid var(--panel-border); color: #fff; padding: 0.65rem 0.9rem;
+      border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
     }
-
-    .admin-btn-action:hover {
-      border-color: var(--brand);
-      background: #202c40;
-    }
-
-    .danger-notice {
-      background: rgba(253, 93, 93, 0.08);
-      border: 1px solid rgba(253, 93, 93, 0.25);
-      padding: 1.5rem;
-      border-radius: 10px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .danger-notice h3 { color: var(--brand); font-size: 1.1rem; }
-    .danger-notice p { font-size: 0.85rem; color: var(--text-muted); }
+    .admin-btn-action:hover { border-color: var(--brand); background: #202c40; }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--panel-border);
       padding: 2rem;
-      background: #0a0d14;
+      background: #090c13;
       text-align: center;
       font-size: 0.85rem;
       color: var(--text-muted);
       margin-top: auto;
     }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.75rem;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .footer-links { display: flex; justify-content: center; gap: 1.75rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--brand); }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
+  <!-- Top Navigation -->
   <header>
     <a href="../../index.html" class="brand-logo">
       <span class="brand-pill">TJP</span>
@@ -349,57 +564,161 @@
     </div>
   </header>
 
-  <!-- Main 2-Column Studio -->
-  <main>
-    <section class="panel">
-      <div class="panel-header">
-        <h2>Input Engine Parameters</h2>
-        <p>Set target keyword & competitor benchmarks to find vacuums.</p>
-      </div>
-
-      <div class="field-group">
-        <label for="targetKeyword">Target Keyword / Topic *</label>
-        <input type="text" id="targetKeyword" value="youtube automation" />
-      </div>
-
-      <div class="field-group">
-        <label for="languageSelect">Vernacular / Language Focus</label>
-        <select id="languageSelect">
-          <option value="en">English (Global)</option>
-          <option value="hinglish" selected>Hinglish / Vernacular Phonetic</option>
-          <option value="hi">Hindi (Native)</option>
-          <option value="es">Spanish</option>
-        </select>
-      </div>
-
-      <div class="field-group">
-        <label for="durationInput">Target Duration (Minutes)</label>
-        <input type="number" id="durationInput" min="2" max="180" value="12" />
-      </div>
-
-      <div class="field-group">
-        <label for="competitorSnippets">Competitor Titles / Snippets (One per line)</label>
-        <textarea id="competitorSnippets">How to start YouTube Automation in 2026
-YouTube Automation Exposed: The Brutal Truth
-Complete YouTube Automation Guide For Beginners</textarea>
-      </div>
-
-      <button class="btn-primary" id="btnAnalyze">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-        Generate SEO Strategy
+  <!-- 4 Studios Tab Switcher -->
+  <div class="tab-bar-container">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-studio="studio-1">
+        <span>🔍 Studio 1: Keyword & Topic Research</span>
+        <span class="badge-sprint">LIVE</span>
       </button>
+      <button class="tab-btn" data-studio="studio-2">
+        <span>🎯 Studio 2: Competitor Video Spy</span>
+        <span class="badge-sprint">Sprint 2</span>
+      </button>
+      <button class="tab-btn" data-studio="studio-3">
+        <span>⚡ Studio 3: Video SEO Score & Fixer</span>
+        <span class="badge-sprint">Sprint 3</span>
+      </button>
+      <button class="tab-btn" data-studio="studio-4">
+        <span>🎙️ Studio 4: Video File & Audio Chapters</span>
+        <span class="badge-sprint">Sprint 4</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Workspace Container -->
+  <main>
+    <!-- Studio 1: Keyword & Topic Research -->
+    <section class="studio-panel" id="studio-1-content">
+      <div class="studio-header">
+        <div>
+          <div class="studio-title-area">
+            <h2>A-to-Z Live Keyword Expander & Tag Suggestions</h2>
+            <div class="tooltip-icon">
+              ⓘ
+              <div class="tooltip-box">
+                <strong>How to Use in 3 Steps:</strong><br/>
+                1. Type your video topic & select language (e.g. Tinglish).<br/>
+                2. Tap "Find Live Keywords" to probe YouTube's live search algorithm.<br/>
+                3. Copy your full 500-char tag bundle or click individual tags to pick only what you need.
+              </div>
+            </div>
+          </div>
+          <p style="font-size:0.83rem; color:var(--text-muted); margin-top:0.3rem;">
+            Real-time YouTube autocomplete predictions with Search Popularity, Competition Guide, and Breakout alerts.
+          </p>
+        </div>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-bar-grid">
+        <input type="text" id="targetKeyword" placeholder="Enter topic (e.g. youtube automation, video editing)" value="youtube automation" />
+        <select id="languageSelect">
+          <option value="tinglish" selected>Tinglish (Telugu + English)</option>
+          <option value="telugu">Telugu (తెలుగు Script)</option>
+          <option value="hindi">Hindi (Hinglish / हिन्दी)</option>
+          <option value="english">English (Global)</option>
+        </select>
+        <button class="btn-primary" id="btnRunSearch">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Find Live Keywords
+        </button>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="results-grid">
+        <!-- Left: A-to-Z Live Keyword Results -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Live YouTube Search Queries</span>
+            <span id="keywordCountBadge" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">0 queries found</span>
+          </div>
+          <div class="keyword-list" id="keywordResultsList">
+            <div style="text-align:center; padding:3rem 1rem; color:var(--text-muted); font-size:0.85rem;">
+              Click <strong>Find Live Keywords</strong> to probe YouTube's search autocomplete.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Smart Tag Suggestions & Hashtags -->
+        <div style="display:flex; flex-direction:column; gap:1.25rem;">
+          <!-- Reassurance Notice & Tag Cloud -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Smart YouTube Tag Suggestions</span>
+              <div class="char-badge" id="tagCharCounter">Characters: <strong>0</strong> / 500</div>
+            </div>
+
+            <!-- Creator Safety Reassurance Banner -->
+            <div class="reassurance-banner">
+              💡 <strong>Creator Guide:</strong> These tags are strategic suggestions. You have full freedom to copy the complete bundle, or tap individual tags below to pick only what fits your video style.
+            </div>
+
+            <!-- Interactive Tag Chips -->
+            <div class="tag-chips-container" id="tagChipsContainer">
+              <span style="color:var(--text-muted); font-size:0.8rem; padding:0.5rem;">Tags will appear here after searching.</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="tag-actions-row">
+              <button class="copy-btn-sm" id="btnCopySelectedTags" style="padding:0.45rem 0.8rem; font-weight:600;">
+                📋 Copy Selected Tags
+              </button>
+              <button class="copy-btn-sm" id="btnCopyFullBundle" style="padding:0.45rem 0.8rem; font-weight:600; border-color:var(--brand); color:#fff;">
+                ⚡ Copy Full 500-Char Bundle
+              </button>
+            </div>
+          </div>
+
+          <!-- Dedicated #Hashtags Card -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Dedicated #Hashtags Pack</span>
+              <button class="copy-btn-sm" id="btnCopyHashtags">Copy #Hashtags</button>
+            </div>
+            <div class="hashtags-box" id="hashtagsContent">
+              #youtubeautomation #youtubegrowth #trending
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- "Why This Exists" FAQ Accordion -->
+      <div class="faq-accordion" id="studio1Faq">
+        <div class="faq-header" onclick="this.parentElement.classList.toggle('active')">
+          <span>❓ Why This Tool Exists & Today's Problem</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-body">
+          <strong>The Problem Today:</strong> Most creators use outdated 2018 keyword tools that display old, cached search data. In regional markets (like Telugu, Hindi, and Tinglish), 70% of viewers search using conversational English letters (e.g. <em>"ela cheyali"</em>), which legacy tools completely ignore.<br/><br/>
+          <strong>How TJP Fixes It:</strong> This tool probes YouTube's live autocomplete algorithm in real-time. It uncovers the exact conversational phrases and regional spelling patterns viewers are typing into YouTube today, scoring them by competition and demand with zero API delay.
+        </div>
+      </div>
     </section>
 
-    <section class="panel">
-      <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h2>Strategy Dashboard</h2>
-          <p>Signal-based output: Content gaps, titles & tag distribution.</p>
-        </div>
-        <span id="execMetric" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">0.0ms</span>
-      </div>
+    <!-- Studio 2, 3, 4 Placeholders (To Be Built in Next Sprints) -->
+    <section class="studio-panel" id="studio-2-content" style="display:none; text-align:center; padding:4rem 2rem;">
+      <h2 style="font-size:1.4rem; color:#fff;">🎯 Studio 2: Competitor Video Spy</h2>
+      <p style="color:var(--text-muted); max-width:550px; margin:0.75rem auto 1.5rem auto; font-size:0.9rem;">
+        Paste any YouTube URL to extract full titles, hidden tags, #hashtags, HD thumbnails, and uncover competitor content vacuums.
+      </p>
+      <div class="badge-metric comp-yellow" style="display:inline-block;">Scheduled for Sprint 2</div>
+    </section>
 
-      <div id="resultsContainer"></div>
+    <section class="studio-panel" id="studio-3-content" style="display:none; text-align:center; padding:4rem 2rem;">
+      <h2 style="font-size:1.4rem; color:#fff;">⚡ Studio 3: Video SEO Score & Fixer</h2>
+      <p style="color:var(--text-muted); max-width:550px; margin:0.75rem auto 1.5rem auto; font-size:0.9rem;">
+        100-Point RankMath-style video SEO checklist, 5-tier titles, above-the-fold hook checker, and the Safe-for-Ads word scanner.
+      </p>
+      <div class="badge-metric comp-yellow" style="display:inline-block;">Scheduled for Sprint 3</div>
+    </section>
+
+    <section class="studio-panel" id="studio-4-content" style="display:none; text-align:center; padding:4rem 2rem;">
+      <h2 style="font-size:1.4rem; color:#fff;">🎙️ Studio 4: Video File & Audio Chapters</h2>
+      <p style="color:var(--text-muted); max-width:550px; margin:0.75rem auto 1.5rem auto; font-size:0.9rem;">
+        Drag & drop local .mp4 files for zero-upload silence-based chapter timestamps and 3-second glance contrast testing.
+      </p>
+      <div class="badge-metric comp-yellow" style="display:inline-block;">Scheduled for Sprint 4</div>
     </section>
   </main>
 
@@ -411,20 +730,20 @@ Complete YouTube Automation Guide For Beginners</textarea>
           <h2 style="font-size:1.1rem; color:#fff;">Admin Controls (tjpromotions.pro)</h2>
           <p style="font-size:0.75rem; color:var(--text-muted);">Simulate admin subscription & trial management.</p>
         </div>
-        <button class="copy-btn" id="btnCloseAdmin">✕ Close</button>
+        <button class="copy-btn-sm" id="btnCloseAdmin">✕ Close</button>
       </div>
 
       <div id="adminUserOverview" style="font-family:var(--font-mono); font-size:0.78rem; background:#090d16; padding:0.8rem; border-radius:6px; color:#94a3b8; line-height:1.6;"></div>
 
-      <div class="field-group">
-        <label>Admin Override: Extend Trial Duration (Days)</label>
+      <div style="display:flex; flex-direction:column; gap:0.4rem;">
+        <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Extend Trial Duration (Days)</label>
         <div style="display:flex; gap:0.5rem;">
-          <input type="number" id="adminTrialDaysInput" min="1" max="90" value="3" />
-          <button class="admin-btn-action" id="btnAdminApplyDays" style="white-space:nowrap;">Apply Days</button>
+          <input type="number" id="adminTrialDaysInput" min="1" max="90" value="3" style="width:100px;" />
+          <button class="admin-btn-action" id="btnAdminApplyDays">Apply Days</button>
         </div>
       </div>
 
-      <label>Quick Status Toggles</label>
+      <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Quick Status Toggles</label>
       <div class="admin-actions-grid">
         <button class="admin-btn-action" id="btnAdminSetPro">🌟 Upgrade to Pro Member</button>
         <button class="admin-btn-action" id="btnAdminSetExpired">⛔ Force Expire Trial</button>
@@ -445,16 +764,46 @@ Complete YouTube Automation Guide For Beginners</textarea>
     </div>
   </footer>
 
-  <!-- Controller Script Module with Cache-Busting Query Version -->
+  <!-- Scripts: Controller + Keyword Engine with Cache-Busting -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.1';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.3';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.3';
 
+    // UI Elements
     const userTierBadge = document.getElementById('userTierBadge');
-    const btnAnalyze = document.getElementById('btnAnalyze');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const execMetric = document.getElementById('execMetric');
+    const targetKeywordInput = document.getElementById('targetKeyword');
+    const languageSelect = document.getElementById('languageSelect');
+    const btnRunSearch = document.getElementById('btnRunSearch');
+    const keywordCountBadge = document.getElementById('keywordCountBadge');
+    const keywordResultsList = document.getElementById('keywordResultsList');
+    const tagChipsContainer = document.getElementById('tagChipsContainer');
+    const tagCharCounter = document.getElementById('tagCharCounter');
+    const hashtagsContent = document.getElementById('hashtagsContent');
+    const btnCopySelectedTags = document.getElementById('btnCopySelectedTags');
+    const btnCopyFullBundle = document.getElementById('btnCopyFullBundle');
+    const btnCopyHashtags = document.getElementById('btnCopyHashtags');
 
-    // Admin Modal Elements
+    // Tab Switcher
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const studioPanels = {
+      'studio-1': document.getElementById('studio-1-content'),
+      'studio-2': document.getElementById('studio-2-content'),
+      'studio-3': document.getElementById('studio-3-content'),
+      'studio-4': document.getElementById('studio-4-content')
+    };
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const studioKey = btn.getAttribute('data-studio');
+        Object.keys(studioPanels).forEach(k => {
+          studioPanels[k].style.display = k === studioKey ? 'flex' : 'none';
+        });
+      });
+    });
+
+    // Admin Elements
     const adminModal = document.getElementById('adminModal');
     const btnOpenAdmin = document.getElementById('btnOpenAdmin');
     const btnCloseAdmin = document.getElementById('btnCloseAdmin');
@@ -466,13 +815,15 @@ Complete YouTube Automation Guide For Beginners</textarea>
     const btnAdminSetPending = document.getElementById('btnAdminSetPending');
     const btnAdminResetTrial = document.getElementById('btnAdminResetTrial');
 
-    // Initialize user session
+    // State
     let currentUser = TjpSeoController.getOrCreateSession();
+    let currentTagData = { individualTags: [], bundleTagString: '', totalCharacters: 0 };
+    let currentHashtags = [];
+
     updateUserBadge();
 
     function updateUserBadge() {
       currentUser = TjpSeoController.evaluateTrialHealth(currentUser);
-
       if (currentUser.tier === 'active_member') {
         userTierBadge.className = 'tier-badge badge-pro';
         userTierBadge.innerHTML = '★ Pro Member (Unlimited)';
@@ -487,119 +838,130 @@ Complete YouTube Automation Guide For Beginners</textarea>
       }
     }
 
-    async function execute() {
-      const keyword = document.getElementById('targetKeyword').value.trim();
-      const language = document.getElementById('languageSelect').value;
-      const duration = parseInt(document.getElementById('durationInput').value, 10) || 12;
-      const competitorRaw = document.getElementById('competitorSnippets').value;
-      const competitorTitles = competitorRaw.split('\n').map(s => s.trim()).filter(Boolean);
+    async function executeSearch() {
+      const keyword = targetKeywordInput.value.trim();
+      const language = languageSelect.value;
 
-      const result = await TjpSeoController.executeAnalysis({
-        targetKeyword: keyword,
-        language: language,
-        videoDurationMinutes: duration,
-        competitorTitles: competitorTitles
-      });
-
-      updateUserBadge();
-
-      if (!result.success || !result.data) {
-        resultsContainer.innerHTML = `
-          <div class="danger-notice">
-            <h3>Access Notice</h3>
-            <p>${result.error}</p>
-            <a href="https://tjpromotions.pro" target="_blank" class="btn-primary" style="text-decoration:none; display:inline-flex; width:max-content; margin:0 auto; padding:0.6rem 1.2rem; font-size:0.85rem;">
-              Manage Subscription on tjpromotions.pro
-            </a>
-          </div>
-        `;
+      if (!keyword) {
+        alert('Please enter a target keyword or topic.');
         return;
       }
 
-      execMetric.innerText = `${result.executionTimeMs}ms (Client-Side)`;
-      renderOutput(result.data);
+      // Check User Quota via Controller
+      currentUser = TjpSeoController.evaluateTrialHealth(currentUser);
+      if (currentUser.tier === 'expired') {
+        alert('Your trial has ended. Upgrade on tjpromotions.pro to continue.');
+        return;
+      }
+
+      btnRunSearch.disabled = true;
+      btnRunSearch.innerHTML = '<span>⚡ Searching YouTube...</span>';
+      keywordResultsList.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-muted);">Probing live YouTube autocomplete in ${language.toUpperCase()}...</div>`;
+
+      try {
+        // Run Live Expander
+        const keywords = await TjpKeywordResearch.runAtoZExpander(keyword, language);
+        currentHashtags = TjpKeywordResearch.generateHashtags(keyword, language);
+        currentTagData = TjpKeywordResearch.buildSmartTagBundle(keyword, keywords);
+
+        renderKeywords(keywords);
+        renderTags();
+        renderHashtags();
+
+        // Increment query usage
+        currentUser.queriesUsedToday += 1;
+        TjpSeoController.saveSession(currentUser);
+        updateUserBadge();
+      } catch (err) {
+        keywordResultsList.innerHTML = `<div style="color:var(--brand); padding:2rem;">Search failed: ${err.message}</div>`;
+      } finally {
+        btnRunSearch.disabled = false;
+        btnRunSearch.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Find Live Keywords`;
+      }
     }
 
-    function renderOutput(data) {
-      resultsContainer.innerHTML = `
-        <div class="dashboard-grid">
-          <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">Tactical Growth Brief</span>
-              <span class="tier-badge-label" style="color:var(--accent-green); background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);">
-                INTENT: ${data.intent.toUpperCase()}
-              </span>
-            </div>
-            <div class="brief-grid">
-              <div class="brief-item"><strong>Thumbnail Focus</strong>${data.strategyBrief.thumbnailVisualCue}</div>
-              <div class="brief-item"><strong>Retention Hook</strong>${data.strategyBrief.retentionHook}</div>
-              <div class="brief-item"><strong>Pacing</strong>${data.strategyBrief.recommendedPacing}</div>
-            </div>
-          </div>
+    function renderKeywords(keywords) {
+      keywordCountBadge.innerText = `${keywords.length} live queries`;
 
-          <div class="card">
-            <div class="card-title-row"><span class="card-title">5-Tier Psychological Titles</span></div>
-            ${data.titles.map(t => `
-              <div class="title-item">
-                <span class="title-text">${t.title}</span>
-                <div class="title-badges">
-                  <span class="tier-badge-label">${t.tier}</span>
-                  <span class="score-badge">Hook ${t.hookScore}</span>
-                  <button class="copy-btn" onclick="navigator.clipboard.writeText('${t.title.replace(/'/g, "\\'")}')">Copy</button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
+      if (keywords.length === 0) {
+        keywordResultsList.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--text-muted);">No suggestions found. Try a broader seed keyword.</div>`;
+        return;
+      }
 
-          <div class="card">
-            <div class="card-title-row"><span class="card-title">Detected Competitor Vacuums</span></div>
-            <div class="pill-cloud">
-              ${data.contentGaps.length > 0
-                ? data.contentGaps.map(g => `<span class="pill ${g.gapSeverity === 'critical' ? 'gap-critical' : ''}">+ ${g.keyword} (${g.frequencyInCompetitors}x)</span>`).join('')
-                : '<span style="font-size:0.8rem; color:var(--text-muted);">No major content vacuums detected in provided competitor set.</span>'
-              }
+      keywordResultsList.innerHTML = keywords.map(item => {
+        const compClass = item.competition.includes('Low') ? 'comp-green' : item.competition.includes('Medium') ? 'comp-yellow' : 'comp-red';
+        const trendClass = item.trendBadge.includes('Breakout') ? 'trend-breakout' : item.trendBadge.includes('Rising') ? 'trend-rising' : 'trend-evergreen';
+
+        return `
+          <div class="keyword-row">
+            <span class="kw-text">${item.keyword}</span>
+            <div class="kw-badges">
+              <span class="badge-metric score" title="Search Popularity Score">★ ${item.popularityScore}</span>
+              <span class="badge-metric ${compClass}" title="Competition Rating">${item.competition.split(' ')[0]}</span>
+              <span class="badge-metric ${trendClass}" title="Trend Status">${item.trendBadge}</span>
+              <button class="copy-btn-sm" onclick="navigator.clipboard.writeText('${item.keyword.replace(/'/g, "\\'")}'); this.innerText='✓'; setTimeout(()=>this.innerText='Copy',1200);">Copy</button>
             </div>
           </div>
+        `;
+      }).join('');
+    }
 
-          <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">Compliant Tags (< 500 Chars)</span>
-              <div>
-                <span class="char-counter">${data.tags.charCount}/500 chars</span>
-                <button class="copy-btn" id="copyTagsBtn">Copy All</button>
-              </div>
-            </div>
-            <div class="tag-box">${data.tags.combinedTagString}</div>
-          </div>
+    function renderTags() {
+      updateTagCounter();
+      tagChipsContainer.innerHTML = currentTagData.individualTags.map((item, idx) => `
+        <span class="tag-chip ${item.selected ? 'selected' : ''}" data-idx="${idx}">
+          ${item.tag} <small style="opacity:0.65;">(${item.charLength})</small>
+        </span>
+      `).join('');
 
-          <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">Structured Description & Chapters</span>
-              <button class="copy-btn" id="copyDescBtn">Copy Description</button>
-            </div>
-            <pre class="desc-preview">${data.description.formattedDescription}</pre>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('copyTagsBtn')?.addEventListener('click', () => {
-        navigator.clipboard.writeText(data.tags.combinedTagString);
-        alert('Tags copied to clipboard!');
-      });
-
-      document.getElementById('copyDescBtn')?.addEventListener('click', () => {
-        navigator.clipboard.writeText(data.description.formattedDescription);
-        alert('Description copied to clipboard!');
+      // Add click listener to toggle tags
+      tagChipsContainer.querySelectorAll('.tag-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const idx = parseInt(chip.getAttribute('data-idx'), 10);
+          currentTagData.individualTags[idx].selected = !currentTagData.individualTags[idx].selected;
+          chip.classList.toggle('selected', currentTagData.individualTags[idx].selected);
+          updateTagCounter();
+        });
       });
     }
 
-    // Admin Panel Handlers
+    function updateTagCounter() {
+      const selectedTags = currentTagData.individualTags.filter(t => t.selected).map(t => t.tag);
+      const totalChars = selectedTags.join(',').length;
+      tagCharCounter.innerHTML = `Characters: <strong>${totalChars}</strong> / 500`;
+      tagCharCounter.className = totalChars > 500 ? 'char-badge warning' : 'char-badge';
+    }
+
+    function renderHashtags() {
+      hashtagsContent.innerText = currentHashtags.join(' ');
+    }
+
+    // Copy Handlers
+    btnCopySelectedTags.addEventListener('click', () => {
+      const selected = currentTagData.individualTags.filter(t => t.selected).map(t => t.tag).join(',');
+      if (!selected) {
+        alert('No tags currently selected.');
+        return;
+      }
+      navigator.clipboard.writeText(selected);
+      alert(`Copied ${selected.split(',').length} tags (${selected.length} characters) to clipboard!`);
+    });
+
+    btnCopyFullBundle.addEventListener('click', () => {
+      navigator.clipboard.writeText(currentTagData.bundleTagString);
+      alert(`Full 500-character tag bundle copied to clipboard!`);
+    });
+
+    btnCopyHashtags.addEventListener('click', () => {
+      navigator.clipboard.writeText(currentHashtags.join(' '));
+      alert('Hashtags copied to clipboard!');
+    });
+
+    // Admin Handlers
     btnOpenAdmin.addEventListener('click', () => {
       adminUserOverview.innerHTML = `
         <strong>User ID:</strong> ${currentUser.userId}<br/>
-        <strong>Email:</strong> ${currentUser.email}<br/>
         <strong>Tier:</strong> ${currentUser.tier.toUpperCase()}<br/>
-        <strong>Status:</strong> ${currentUser.approvalStatus.toUpperCase()}<br/>
         <strong>Configured Trial Days:</strong> ${currentUser.trialDurationDays} days<br/>
         <strong>Today's Usage:</strong> ${currentUser.queriesUsedToday} / ${currentUser.maxDailyQueries}
       `;
@@ -650,10 +1012,10 @@ Complete YouTube Automation Guide For Beginners</textarea>
       adminModal.classList.remove('active');
     });
 
-    btnAnalyze.addEventListener('click', execute);
+    btnRunSearch.addEventListener('click', executeSearch);
 
-    // Initial run
-    execute();
+    // Run first search automatically on load
+    executeSearch();
   </script>
 </body>
 </html>
