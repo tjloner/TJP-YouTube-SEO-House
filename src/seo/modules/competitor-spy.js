@@ -1,56 +1,32 @@
 /**
- * TJP YouTube SEO Engine — Studio 2: Competitor Video Spy
+ * TJP YouTube SEO Engine — Studio 2: Competitor Video Spy (Pro Niche-Adaptive Engine)
  * Module: src/seo/modules/competitor-spy.js
- * 
- * 100% Client-Side Engine ($0 APIs):
- *  - YouTube URL & Shorts Ingestion
- *  - Private / Unlisted / Deleted Link Interceptor
- *  - 1-Click HD Thumbnail (1080p) & Asset Grabber
- *  - "Suggested Video" Tag Co-occurrence Matcher
- *  - Competitor Content Vacuum Detector
- *  - Estimated Video Revenue Guide
- *  - High-Engagement Pinned Comment Generator
  */
 
 export class TjpCompetitorSpy {
-  /**
-   * Extracts clean 11-character Video ID from any YouTube URL format
-   * (Regular, youtu.be, mobile, or YouTube Shorts).
-   */
   static extractVideoId(url) {
     if (!url || typeof url !== 'string') return null;
     const cleanUrl = url.trim();
-
-    // Standard watch?v=, embed/, shorts/, or youtu.be/
     const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const match = cleanUrl.match(regExp);
     return (match && match[1]) ? match[1] : null;
   }
 
-  /**
-   * Fetches public metadata using YouTube's zero-cost public oEmbed endpoint.
-   * Intercepts Private, Deleted, or Geoblocked videos with clear warnings.
-   */
   static async fetchPublicVideoMeta(videoId) {
     const targetUrl = `https://www.youtube.com/watch?v=${videoId}`;
     const oembedEndpoint = `https://www.youtube.com/oembed?url=${encodeURIComponent(targetUrl)}&format=json`;
 
     try {
       const response = await fetch(oembedEndpoint);
-
       if (response.status === 404 || response.status === 401) {
         return {
           success: false,
           error: 'This video is Private, Unlisted, or has been Deleted. YouTube hides its metadata from public search.'
         };
       }
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
 
       const data = await response.json();
-
       return {
         success: true,
         videoId,
@@ -58,7 +34,6 @@ export class TjpCompetitorSpy {
         authorName: data.author_name || 'Creator',
         authorUrl: data.author_url || '',
         thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-        thumbnailFallback: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
         embedHtml: data.html || '',
         videoUrl: targetUrl
       };
@@ -71,103 +46,141 @@ export class TjpCompetitorSpy {
   }
 
   /**
-   * Isolates the competitor's primary anchor tags to bridge
-   * your video into their "Suggested Videos" (Up Next) recommendation rail.
+   * Intelligently splits long titles on delimiters (-, |, /, :)
+   * so tags are crisp (under 30 chars each) rather than 80-character giant strings.
    */
   static extractSuggestedVideoAnchors(title, authorName) {
-    const stopWords = new Set(['the', 'and', 'for', 'with', 'how', 'what', 'why', 'this', 'that', 'video', 'in', 'on', 'to']);
-    const cleanTokens = title
-      .toLowerCase()
-      .replace(/[^\w\s]/g, ' ')
-      .split(/\s+/)
-      .filter(w => w.length > 2 && !stopWords.has(w));
+    const rawSegments = title
+      .split(/[-–—|/:,•]/)
+      .map(s => s.trim().toLowerCase())
+      .filter(s => s.length > 2 && s.length <= 40);
 
-    const anchors = [
-      title.toLowerCase(),
-      authorName.toLowerCase(),
-      cleanTokens.slice(0, 3).join(' '),
-      cleanTokens.slice(-2).join(' ')
-    ].filter(Boolean);
+    const cleanAnchors = new Set(rawSegments);
+    if (authorName) cleanAnchors.add(authorName.toLowerCase().trim());
+
+    // Fallback: if title had no delimiters, take 2-3 word chunks
+    if (cleanAnchors.size <= 1) {
+      const words = title.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).filter(w => w.length > 2);
+      if (words.length >= 2) cleanAnchors.add(words.slice(0, 3).join(' '));
+      if (words.length >= 4) cleanAnchors.add(words.slice(-3).join(' '));
+    }
 
     return {
-      suggestedBridgeTags: Array.from(new Set(anchors)),
-      advice: `Place these 2-3 anchor tags into your video metadata to signal to YouTube's recommendation algorithm that your content is a direct match for viewers watching "${title}".`
+      suggestedBridgeTags: Array.from(cleanAnchors),
+      advice: `These clean anchor tags signal to YouTube's recommendation algorithm to recommend your video under "${title}".`
     };
   }
 
   /**
-   * Compares competitor titles against your target keyword to find "Content Vacuums"
-   * (high-demand topics your competitors completely skipped).
+   * Niche-Adaptive Content Vacuum Detector:
+   * Detects whether content is Entertainment/Story vs Tutorial/Business
+   * so it NEVER suggests silly things like "Stories pricing"!
    */
-  static detectContentVacuums(targetTopic, competitorTitles = []) {
-    const targetTokens = new Set(targetTopic.toLowerCase().split(/\s+/).filter(w => w.length > 2));
-    const competitorTokens = new Map();
+  static detectContentVacuums(targetTopic, competitorTitle = '') {
+    const lowerTitle = (competitorTitle + ' ' + targetTopic).toLowerCase();
+    
+    // Detect Niche:
+    const isEntertainment = /story|stories|kathalu|kahani|movie|song|comedy|animation|drama|episode|kids/i.test(lowerTitle);
 
-    competitorTitles.forEach(t => {
-      t.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/).forEach(tok => {
-        if (tok.length > 2) {
-          competitorTokens.set(tok, (competitorTokens.get(tok) || 0) + 1);
-        }
-      });
-    });
+    let vacuumTopics = [];
 
-    const highTrafficTopics = [
-      'beginner', 'step by step', 'pricing', 'mistakes', 'secrets',
-      'full guide', 'results', 'proof', 'free', 'cost', 'review 2026'
-    ];
+    if (isEntertainment) {
+      // Entertainment / Stories Vacuums
+      vacuumTopics = [
+        { suffix: 'part 2', reason: 'High demand for sequels; viewers always search for the continuation.' },
+        { suffix: 'moral & meaning', reason: 'Parents and teachers search for moral explanations of stories.' },
+        { suffix: 'full episode', reason: 'Viewers hate clips and search for uninterrupted full stories.' },
+        { suffix: 'kids animation', reason: 'Massive audience segment searching specifically for child-friendly animation.' }
+      ];
+    } else {
+      // Tutorial / Tech / Business Vacuums
+      vacuumTopics = [
+        { suffix: 'for beginners', reason: 'Entry-level viewers search for step-by-step guides without complex jargon.' },
+        { suffix: 'mistakes to avoid', reason: 'High-CTR search query from viewers wanting to avoid losses.' },
+        { suffix: 'complete roadmap 2026', reason: 'Strong authority query for updated current-year frameworks.' },
+        { suffix: 'free vs paid comparison', reason: 'High-intent search query for decision-makers.' }
+      ];
+    }
 
-    const vacuums = [];
-    highTrafficTopics.forEach(topic => {
-      const isMissingInCompetitors = !competitorTitles.some(t => t.toLowerCase().includes(topic));
-      if (isMissingInCompetitors) {
-        vacuums.push({
-          topic: `${targetTopic} ${topic}`,
-          reason: `None of the analyzed competitors covered "${topic}". Making a video or chapter on this gives you a clean content vacuum advantage.`
-        });
-      }
-    });
-
-    return vacuums.slice(0, 4);
+    return vacuumTopics.map(v => ({
+      topic: `${targetTopic} ${v.suffix}`,
+      reason: v.reason
+    }));
   }
 
   /**
-   * Estimates Video Ad Earnings Range using real-world YouTube CPM benchmarks ($2 - $12).
+   * Regional Audience Aware Revenue Guide:
+   * Supports India Traffic (₹ / $) vs US / Tier-1 Traffic
    */
-  static estimateRevenueRange(views = 50000) {
+  static estimateRevenueRange(views = 50000, region = 'india') {
     const safeViews = Math.max(1000, parseInt(views, 10) || 50000);
-    const lowCpm = 2.0;   // Low CPM (Gaming, Entertainment)
-    const midCpm = 5.5;   // Mid CPM (Tech, Education, Lifestyle)
-    const highCpm = 12.0; // High CPM (Finance, B2B, SaaS)
+
+    let lowCpm, highCpm, currencySymbol;
+
+    if (region === 'india') {
+      // Indian Audience RPM: ₹35 - ₹100 per 1k views ($0.40 - $1.20)
+      lowCpm = 0.40;
+      highCpm = 1.20;
+      currencySymbol = '$';
+    } else {
+      // US / Tier 1 Audience RPM: $3.00 - $9.00
+      lowCpm = 3.0;
+      highCpm = 9.0;
+      currencySymbol = '$';
+    }
 
     const lowEst = Math.round((safeViews / 1000) * lowCpm);
-    const midEst = Math.round((safeViews / 1000) * midCpm);
     const highEst = Math.round((safeViews / 1000) * highCpm);
+
+    const inrLow = Math.round(lowEst * 84);
+    const inrHigh = Math.round(highEst * 84);
 
     return {
       views: safeViews.toLocaleString(),
-      rangeText: `$${lowEst} - $${highEst}`,
-      midpoint: `$${midEst}`,
-      note: "Estimated ad revenue based on typical YouTube CPMs across Entertainment ($2/cpm) vs Tech/Finance ($12/cpm)."
+      rangeText: region === 'india' 
+        ? `₹${inrLow.toLocaleString()} - ₹${inrHigh.toLocaleString()} ($${lowEst} - $${highEst})`
+        : `$${lowEst} - $${highEst}`,
+      note: region === 'india'
+        ? "Realistic Indian regional RPM benchmarks (₹35–₹100 per 1,000 views)."
+        : "US / Tier-1 international audience CPM benchmarks ($3–$9 per 1,000 views)."
     };
   }
 
   /**
-   * Generates 3 High-Engagement Pinned Comment Templates
-   * to drive early comment velocity (Debate, Timestamp Summary, Resource Link).
+   * Niche-Adaptive Pinned Comments (Story vs Tutorial)
    */
   static generatePinnedComments(videoTitle, primaryKeyword) {
+    const isEntertainment = /story|stories|kathalu|kahani|movie|song|comedy|kids/i.test(videoTitle + ' ' + primaryKeyword);
+
+    if (isEntertainment) {
+      return [
+        {
+          type: "🗣️ Community Question (Boosts Comments)",
+          text: `ఈ కథలో మీకు నచ్చిన నీతి లేదా క్యారెక్టర్ ఏది? మీ అభిప్రాయాన్ని క్రింద కామెంట్ చేయండి! 👇 (Replying to all comments!)`
+        },
+        {
+          type: "⭐ Part 2 / Sequel Demand Poll",
+          text: `ఈ కథకి పార్ట్-2 (Next Story) కావాలనుకుంటే కామెంట్స్ లో "PART 2" అని టైప్ చేయండి! త్వరలోనే అప్‌లోడ్ చేస్తాం!`
+        },
+        {
+          type: "🔔 Notification Bell Reminder",
+          text: `ప్రతిరోజూ సరికొత్త కథల కోసం ఛానెల్‌ని సబ్‌స్క్రైబ్ చేసుకొని గంట గుర్తు నొక్కండి! ఈ కథ మీ మిత్రులతో కూడా షేర్ చేయండి!`
+        }
+      ];
+    }
+
     return [
       {
-        type: "🔥 The Debate Question (Highest Comment Velocity)",
+        type: "🔥 The Debate Question",
         text: `Be honest: what is your biggest struggle when it comes to ${primaryKeyword}? Drop your thoughts below—I'm replying to everyone in the first 2 hours! 👇`
       },
       {
-        type: "⏱️ The Highlight Chapter Jump",
-        text: `📌 Quick Navigation:\n00:00 - The Core Problem\n02:15 - The Exact Strategy for ${primaryKeyword}\n06:40 - The #1 Mistake to Avoid\n\nWhich chapter helped you the most? Let me know below!`
+        type: "⏱️ Highlight Chapter Navigation",
+        text: `📌 Quick Navigation:\n00:00 - The Core Problem\n02:15 - Step-by-Step ${primaryKeyword}\n06:40 - The #1 Trap to Avoid\n\nWhich chapter helped you the most?`
       },
       {
-        type: "🎁 The Resource / Free Checklist Pin",
-        text: `Thanks for watching! If you want the complete step-by-step checklist mentioned in this video for ${primaryKeyword}, let me know in the comments and subscribe for next week's breakdown!`
+        type: "🎁 Free Checklist Pin",
+        text: `Thanks for watching! If you want the complete checklist for ${primaryKeyword}, let me know in the comments and subscribe for next week's guide!`
       }
     ];
   }

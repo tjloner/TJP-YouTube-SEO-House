@@ -306,7 +306,7 @@
 
     .btn-primary:hover { background: var(--brand-hover); }
 
-    /* Studio 1 & 2 Results Grids */
+    /* Results Grids */
     .results-grid {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
@@ -572,7 +572,7 @@
     }
 
     .revenue-stat-big {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--accent-green);
       font-family: var(--font-mono);
@@ -607,7 +607,7 @@
       padding: 0.75rem;
     }
 
-    /* "Why This Exists" FAQ Accordion */
+    /* FAQ Accordion */
     .faq-accordion {
       background: var(--card-bg);
       border: 1px solid var(--panel-border);
@@ -834,8 +834,8 @@
 
       <!-- Spy Input Bar -->
       <div class="spy-input-grid">
-        <input type="text" id="competitorUrlInput" placeholder="Paste YouTube Video URL (e.g. https://www.youtube.com/watch?v=... or shorts)" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
-        <input type="text" id="targetTopicInput" placeholder="Your target topic (e.g. digital marketing guide)" value="digital marketing tutorial" />
+        <input type="text" id="competitorUrlInput" placeholder="Paste YouTube Video URL (e.g. https://www.youtube.com/watch?v=... or shorts)" value="https://www.youtube.com/watch?v=ClbNTtzW88s" />
+        <input type="text" id="targetTopicInput" placeholder="Your target topic (e.g. Stories)" value="Stories" />
         <button class="btn-primary" id="btnRunSpy">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
           Spy Video
@@ -876,7 +876,7 @@
               <button class="copy-btn-sm" id="btnCopyBridgeTags">Copy Bridge Tags</button>
             </div>
             <div class="reassurance-banner">
-              🎯 <strong>Suggested Traffic Strategy:</strong> Put these 3–4 anchor tags in your video tags so YouTube's recommendation algorithm connects your video to this competitor's audience.
+              🎯 <strong>Suggested Traffic Strategy:</strong> Put these clean anchor tags in your video tags so YouTube's recommendation algorithm connects your video to this competitor's audience.
             </div>
             <div class="tag-chips-container" id="bridgeTagsContainer"></div>
           </div>
@@ -891,25 +891,31 @@
           </div>
         </div>
 
-        <!-- Ad Revenue Guide Card -->
+        <!-- Ad Revenue Guide Card (With India ₹ vs US $ Regional Selector) -->
         <div class="revenue-card">
           <div>
             <span class="card-title" style="color:var(--accent-green);">Estimated Ad Earnings Guide</span>
-            <div class="revenue-stat-big" id="revenueRangeText">$100 - $600</div>
+            <div class="revenue-stat-big" id="revenueRangeText">₹1,680 - ₹5,040 ($20 - $60)</div>
             <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;" id="revenueNoteText">
-              Estimated ad revenue based on typical YouTube CPM benchmarks ($2 - $12/cpm).
+              Realistic Indian regional RPM benchmarks (₹35–₹100 per 1,000 views).
             </p>
           </div>
           <div style="display:flex; flex-direction:column; gap:0.4rem; align-items:flex-end;">
-            <label style="font-size:0.75rem; color:var(--text-muted);">Simulate View Count:</label>
-            <input type="number" id="revenueViewsInput" value="50000" step="5000" min="1000" style="width:140px; padding:0.4rem 0.6rem; font-size:0.85rem;" />
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <select id="revenueRegionSelect" style="width:130px; padding:0.35rem 0.6rem; font-size:0.8rem;">
+                <option value="india" selected>🇮🇳 India (₹)</option>
+                <option value="us">🇺🇸 US / Global ($)</option>
+              </select>
+              <input type="number" id="revenueViewsInput" value="50000" step="5000" min="1000" style="width:110px; padding:0.35rem 0.6rem; font-size:0.85rem;" />
+            </div>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Simulate View Count</span>
           </div>
         </div>
 
         <!-- High-Engagement Pinned Comment Drafter -->
         <div class="card">
           <div class="card-header">
-            <span class="card-title">High-Engagement Pinned Comments</span>
+            <span class="card-title">Niche-Adaptive Pinned Comments</span>
           </div>
           <p style="font-size:0.82rem; color:var(--text-muted);">
             Pick one of these pre-written comments and pin it to trigger the early comment engagement loop.
@@ -995,9 +1001,9 @@
 
   <!-- Scripts: Controller + Studio 1 & 2 Modules -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.4';
-    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.4';
-    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.4';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.5';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.5';
+    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.5';
 
     // UI Elements - Header & Session
     const userTierBadge = document.getElementById('userTierBadge');
@@ -1178,6 +1184,8 @@
     const btnCopyBridgeTags = document.getElementById('btnCopyBridgeTags');
     const vacuumsList = document.getElementById('vacuumsList');
     const revenueRangeText = document.getElementById('revenueRangeText');
+    const revenueNoteText = document.getElementById('revenueNoteText');
+    const revenueRegionSelect = document.getElementById('revenueRegionSelect');
     const revenueViewsInput = document.getElementById('revenueViewsInput');
     const pinnedCommentsList = document.getElementById('pinnedCommentsList');
 
@@ -1186,7 +1194,7 @@
 
     async function executeSpy() {
       const rawUrl = competitorUrlInput.value.trim();
-      const targetTopic = targetTopicInput.value.trim() || 'video tutorial';
+      const targetTopic = targetTopicInput.value.trim() || 'Stories';
 
       if (!rawUrl) return alert('Please enter a YouTube video URL.');
 
@@ -1218,15 +1226,15 @@
         spyAuthorName.innerText = metaResult.authorName;
         spyAuthorLink.href = metaResult.authorUrl;
 
-        // 2. Infiltration Tags
+        // 2. Infiltration Tags (Clean Delimiter Split)
         const infiltration = TjpCompetitorSpy.extractSuggestedVideoAnchors(metaResult.title, metaResult.authorName);
         currentBridgeTags = infiltration.suggestedBridgeTags;
         bridgeTagsContainer.innerHTML = currentBridgeTags.map(t => `
           <span class="tag-chip selected">${t}</span>
         `).join('');
 
-        // 3. Content Vacuums
-        const vacuums = TjpCompetitorSpy.detectContentVacuums(targetTopic, [metaResult.title]);
+        // 3. Niche-Adaptive Content Vacuums
+        const vacuums = TjpCompetitorSpy.detectContentVacuums(targetTopic, metaResult.title);
         vacuumsList.innerHTML = vacuums.map(v => `
           <div class="vacuum-item">
             <span class="vacuum-topic">+ ${v.topic}</span>
@@ -1234,10 +1242,10 @@
           </div>
         `).join('');
 
-        // 4. Revenue Guide
+        // 4. Regional Revenue Guide
         updateRevenueDisplay();
 
-        // 5. High-Engagement Pinned Comments
+        // 5. Niche-Adaptive Pinned Comments
         const comments = TjpCompetitorSpy.generatePinnedComments(metaResult.title, targetTopic);
         pinnedCommentsList.innerHTML = comments.map((c, i) => `
           <div class="comment-card">
@@ -1259,10 +1267,13 @@
 
     function updateRevenueDisplay() {
       const views = parseInt(revenueViewsInput.value, 10) || 50000;
-      const rev = TjpCompetitorSpy.estimateRevenueRange(views);
+      const region = revenueRegionSelect ? revenueRegionSelect.value : 'india';
+      const rev = TjpCompetitorSpy.estimateRevenueRange(views, region);
       revenueRangeText.innerText = rev.rangeText;
+      revenueNoteText.innerText = rev.note;
     }
 
+    if (revenueRegionSelect) revenueRegionSelect.addEventListener('change', updateRevenueDisplay);
     revenueViewsInput.addEventListener('input', updateRevenueDisplay);
 
     btnCopyTitle.addEventListener('click', () => {
