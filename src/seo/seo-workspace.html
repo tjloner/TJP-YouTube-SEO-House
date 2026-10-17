@@ -409,9 +409,9 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
-      max-height: 220px;
+      max-height: 250px;
       overflow-y: auto;
-      padding: 0.5rem;
+      padding: 0.6rem;
       background: #090d16;
       border: 1px solid var(--panel-border);
       border-radius: 8px;
@@ -465,15 +465,15 @@
     /* Competitor Spy UI Components */
     .competitor-preview-box {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 1.25rem;
+      grid-template-columns: 320px 1fr;
+      gap: 1.5rem;
       background: #121824;
       border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      padding: 1.25rem;
+      border-radius: 12px;
+      padding: 1.5rem;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .competitor-preview-box { grid-template-columns: 1fr; }
     }
 
@@ -483,6 +483,7 @@
       overflow: hidden;
       aspect-ratio: 16 / 9;
       background: #000;
+      border: 1px solid var(--panel-border);
     }
 
     .thumb-wrapper img {
@@ -491,38 +492,24 @@
       object-fit: cover;
     }
 
-    .btn-download-thumb {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.35rem 0.65rem;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .btn-download-thumb:hover { background: var(--brand); border-color: var(--brand); }
-
     .comp-details {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
     .comp-title {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: #fff;
-      line-height: 1.35;
+      line-height: 1.4;
+    }
+
+    .comp-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
     .comp-channel {
@@ -537,6 +524,13 @@
 
     .comp-channel:hover { text-decoration: underline; }
 
+    .thumb-kit-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
     .vacuum-item {
       background: #121824;
       border: 1px solid var(--panel-border);
@@ -548,34 +542,40 @@
       gap: 0.3rem;
     }
 
-    .vacuum-topic {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .vacuum-reason {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
+    .vacuum-topic { font-size: 0.9rem; font-weight: 700; color: #fff; }
+    .vacuum-reason { font-size: 0.8rem; color: var(--text-muted); }
 
     .revenue-card {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(18, 24, 36, 0.9) 100%);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(18, 24, 36, 0.95) 100%);
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: 10px;
-      padding: 1.25rem;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .revenue-top-row {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 1rem;
     }
 
     .revenue-stat-big {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: 800;
       color: var(--accent-green);
       font-family: var(--font-mono);
+      margin-top: 0.2rem;
+    }
+
+    .revenue-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .comment-card {
@@ -605,6 +605,20 @@
       border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 6px;
       padding: 0.75rem;
+    }
+
+    pre.desc-inspector {
+      background: #090d16;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      white-space: pre-wrap;
+      max-height: 180px;
+      overflow-y: auto;
+      line-height: 1.5;
     }
 
     /* FAQ Accordion */
@@ -810,24 +824,24 @@
       </div>
     </section>
 
-    <!-- Studio 2: Competitor Video Spy -->
+    <!-- Studio 2: Competitor Video Spy (Pro Edition) -->
     <section class="studio-panel" id="studio-2-content" style="display:none;">
       <div class="studio-header">
         <div>
           <div class="studio-title-area">
-            <h2>Competitor Video Spy & "Up Next" Infiltration</h2>
+            <h2>Competitor Video Spy & Hidden Metadata Grabber</h2>
             <div class="tooltip-icon">
               ⓘ
               <div class="tooltip-box">
                 <strong>How to Spy in 3 Steps:</strong><br/>
                 1. Paste any YouTube video URL or Shorts link.<br/>
                 2. Enter your target topic to spot missing content vacuums.<br/>
-                3. Click "Spy Video" to grab HD thumbnails, bridge tags, and revenue estimates.
+                3. Click "Spy Video" to extract the real hidden tags, HD thumbnails, external links, and revenue math.
               </div>
             </div>
           </div>
           <p style="font-size:0.83rem; color:var(--text-muted); margin-top:0.3rem;">
-            Reverse-engineer competitor metadata, grab 1080p thumbnails, and discover topics they skipped.
+            Reverse-engineer competitor metadata, grab 100% real hidden tags from page source, and inspect 8-min mid-roll monetization.
           </p>
         </div>
       </div>
@@ -849,76 +863,143 @@
         <div class="competitor-preview-box">
           <div class="thumb-wrapper">
             <img id="spyThumbImg" src="" alt="Thumbnail" />
-            <a id="btnDownloadThumbLink" href="#" target="_blank" class="btn-download-thumb">
-              📥 Download 1080p
-            </a>
           </div>
           <div class="comp-details">
-            <span class="card-title">Extracted Video Asset</span>
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
+              <span class="card-title">Competitor Profile</span>
+              <span id="spyDurationBadge" class="badge-metric comp-yellow">⏱️ Calculating Duration...</span>
+            </div>
+
             <h3 class="comp-title" id="spyVideoTitle">Video Title</h3>
-            <a id="spyAuthorLink" href="#" target="_blank" class="comp-channel">
-              Channel: <span id="spyAuthorName">Author Name</span> ↗
-            </a>
-            <div style="margin-top:auto; display:flex; gap:0.5rem; flex-wrap:wrap;">
+
+            <div class="comp-meta-row">
+              <a id="spyAuthorLink" href="#" target="_blank" class="comp-channel">
+                Channel: <span id="spyAuthorName">Author Name</span> ↗
+              </a>
+            </div>
+
+            <!-- Thumbnail Kit Downloads -->
+            <div style="margin-top:0.4rem;">
+              <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Download Thumbnails:</span>
+              <div class="thumb-kit-bar">
+                <a id="btnThumb1080" href="#" target="_blank" class="copy-btn-sm" style="border-color:var(--brand); color:#fff;">📥 1080p MaxRes</a>
+                <a id="btnThumb720" href="#" target="_blank" class="copy-btn-sm">📥 720p HD</a>
+                <a id="btnThumb480" href="#" target="_blank" class="copy-btn-sm">📥 480p SD</a>
+              </div>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div style="margin-top:auto; display:flex; gap:0.5rem; flex-wrap:wrap; padding-top:0.5rem;">
               <button class="copy-btn-sm" id="btnCopyTitle">Copy Title</button>
-              <button class="copy-btn-sm" id="btnCopyEmbed">Copy Embed Code</button>
               <button class="copy-btn-sm" id="btnCopyVideoUrl">Copy Clean Link</button>
             </div>
           </div>
         </div>
 
-        <!-- 2-Column Intelligence Grid -->
+        <!-- 2-Column: Real Hidden Tags & Content Vacuums -->
         <div class="results-grid">
-          <!-- Suggested Video Infiltration Anchors -->
+          <!-- Real Hidden Tags from HTML -->
           <div class="card">
             <div class="card-header">
-              <span class="card-title">"Up Next" Infiltration Tags</span>
-              <button class="copy-btn-sm" id="btnCopyBridgeTags">Copy Bridge Tags</button>
+              <div>
+                <span class="card-title">Real Hidden Competitor Tags</span>
+                <span id="realTagsSourceBadge" class="badge-metric comp-green" style="margin-left:0.5rem;">Page Source</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span id="realTagsCharCounter" class="char-badge">0 / 500 chars</span>
+                <button class="copy-btn-sm" id="btnCopyRealTags" style="border-color:var(--brand); color:#fff;">Copy All Tags</button>
+              </div>
             </div>
             <div class="reassurance-banner">
-              🎯 <strong>Suggested Traffic Strategy:</strong> Put these clean anchor tags in your video tags so YouTube's recommendation algorithm connects your video to this competitor's audience.
+              🔍 <strong>Source Truth:</strong> These are the exact tags extracted from the video's underlying HTML metadata (<meta name="keywords">). Click any tag to copy it.
             </div>
-            <div class="tag-chips-container" id="bridgeTagsContainer"></div>
+            <div class="tag-chips-container" id="realTagsContainer" style="max-height:260px;"></div>
           </div>
 
-          <!-- Content Vacuums -->
+          <!-- Niche-Adaptive Content Vacuums -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">Detected Content Vacuums</span>
               <span class="badge-metric comp-green">Opportunity</span>
             </div>
+            <p style="font-size:0.8rem; color:var(--text-muted);">High-traffic subtopics this competitor forgot to cover:</p>
             <div id="vacuumsList" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
           </div>
         </div>
 
-        <!-- Ad Revenue Guide Card (With India ₹ vs US $ Regional Selector) -->
-        <div class="revenue-card">
-          <div>
-            <span class="card-title" style="color:var(--accent-green);">Estimated Ad Earnings Guide</span>
-            <div class="revenue-stat-big" id="revenueRangeText">₹1,680 - ₹5,040 ($20 - $60)</div>
-            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;" id="revenueNoteText">
-              Realistic Indian regional RPM benchmarks (₹35–₹100 per 1,000 views).
-            </p>
+        <!-- Full Description, External Links & Hashtags Inspector -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Description & External Monetization Links</span>
+            <button class="copy-btn-sm" id="btnCopyDesc">Copy Full Description</button>
           </div>
-          <div style="display:flex; flex-direction:column; gap:0.4rem; align-items:flex-end;">
-            <div style="display:flex; gap:0.5rem; align-items:center;">
-              <select id="revenueRegionSelect" style="width:130px; padding:0.35rem 0.6rem; font-size:0.8rem;">
-                <option value="india" selected>🇮🇳 India (₹)</option>
-                <option value="us">🇺🇸 US / Global ($)</option>
-              </select>
-              <input type="number" id="revenueViewsInput" value="50000" step="5000" min="1000" style="width:110px; padding:0.35rem 0.6rem; font-size:0.85rem;" />
+          <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:1rem;">
+            <div>
+              <pre class="desc-inspector" id="spyDescContent">Loading description...</pre>
             </div>
-            <span style="font-size:0.7rem; color:var(--text-muted);">Simulate View Count</span>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div>
+                <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Extracted External Links (Affiliate/Sponsor):</span>
+                <div id="extractedLinksList" style="margin-top:0.35rem; font-size:0.78rem; max-height:85px; overflow-y:auto; line-height:1.5;"></div>
+              </div>
+              <div>
+                <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Extracted #Hashtags:</span>
+                <div id="extractedHashtagsList" style="margin-top:0.35rem; font-family:var(--font-mono); font-size:0.78rem; color:var(--accent-blue);"></div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- High-Engagement Pinned Comment Drafter -->
+        <!-- Real Mathematical Ad Revenue Guide -->
+        <div class="revenue-card">
+          <div class="revenue-top-row">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="card-title" style="color:var(--accent-green);">Estimated Ad Earnings Guide</span>
+                <span id="revenueMultiplierBadge" class="badge-metric comp-green">1.0×</span>
+              </div>
+              <div class="revenue-stat-big" id="revenueRangeText">₹1,500 - ₹3,250 ($18 - $39)</div>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;" id="revenueFormulaText">
+                Math: (50,000 views ÷ 1,000) × ₹30–₹65 RPM.
+              </p>
+            </div>
+
+            <div class="revenue-controls">
+              <div>
+                <label style="font-size:0.7rem; color:var(--text-muted); display:block; margin-bottom:0.2rem;">Select Niche:</label>
+                <select id="revenueNicheSelect" style="width:160px; padding:0.4rem 0.6rem; font-size:0.8rem;">
+                  <option value="stories_animation" selected>Stories & Animation</option>
+                  <option value="tech_tutorials">Tech, AI & Tutorials</option>
+                  <option value="finance_business">Finance & Crypto</option>
+                  <option value="vlogs_entertainment">Vlogs & Comedy</option>
+                  <option value="gaming">Gaming & Streaming</option>
+                  <option value="education_jobs">Education & Govt Jobs</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size:0.7rem; color:var(--text-muted); display:block; margin-bottom:0.2rem;">Audience:</label>
+                <select id="revenueRegionSelect" style="width:125px; padding:0.4rem 0.6rem; font-size:0.8rem;">
+                  <option value="india" selected>🇮🇳 India (₹)</option>
+                  <option value="us">🇺🇸 US / Global ($)</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size:0.7rem; color:var(--text-muted); display:block; margin-bottom:0.2rem;">Views:</label>
+                <input type="number" id="revenueViewsInput" value="50000" step="5000" min="1000" style="width:105px; padding:0.4rem 0.6rem; font-size:0.82rem;" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Niche-Adaptive Pinned Comments -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">Niche-Adaptive Pinned Comments</span>
           </div>
           <p style="font-size:0.82rem; color:var(--text-muted);">
-            Pick one of these pre-written comments and pin it to trigger the early comment engagement loop.
+            Pre-written comments tailored to this content genre to kickstart early viewer discussion:
           </p>
           <div id="pinnedCommentsList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
         </div>
@@ -957,7 +1038,7 @@
     </section>
   </main>
 
-  <!-- Admin Interface Simulation Modal -->
+  <!-- Admin Modal -->
   <div class="modal-overlay" id="adminModal">
     <div class="admin-card">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--panel-border); padding-bottom:0.75rem;">
@@ -999,13 +1080,13 @@
     </div>
   </footer>
 
-  <!-- Scripts: Controller + Studio 1 & 2 Modules -->
+  <!-- Scripts: Controller + Studio Modules with Cache-Busting -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.5';
-    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.5';
-    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.5';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.6';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.6';
+    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.6';
 
-    // UI Elements - Header & Session
+    // Header Session
     const userTierBadge = document.getElementById('userTierBadge');
     let currentUser = TjpSeoController.getOrCreateSession();
     updateUserBadge();
@@ -1166,31 +1247,41 @@
     btnRunSearch.addEventListener('click', executeSearch);
 
     /* ==========================================================================
-       STUDIO 2 LOGIC (Competitor Video Spy)
+       STUDIO 2 LOGIC (Competitor Video Spy - Pro Edition)
        ========================================================================== */
     const competitorUrlInput = document.getElementById('competitorUrlInput');
     const targetTopicInput = document.getElementById('targetTopicInput');
     const btnRunSpy = document.getElementById('btnRunSpy');
     const spyOutputContainer = document.getElementById('spyOutputContainer');
     const spyThumbImg = document.getElementById('spyThumbImg');
-    const btnDownloadThumbLink = document.getElementById('btnDownloadThumbLink');
+    const btnThumb1080 = document.getElementById('btnThumb1080');
+    const btnThumb720 = document.getElementById('btnThumb720');
+    const btnThumb480 = document.getElementById('btnThumb480');
     const spyVideoTitle = document.getElementById('spyVideoTitle');
     const spyAuthorName = document.getElementById('spyAuthorName');
     const spyAuthorLink = document.getElementById('spyAuthorLink');
+    const spyDurationBadge = document.getElementById('spyDurationBadge');
     const btnCopyTitle = document.getElementById('btnCopyTitle');
-    const btnCopyEmbed = document.getElementById('btnCopyEmbed');
     const btnCopyVideoUrl = document.getElementById('btnCopyVideoUrl');
-    const bridgeTagsContainer = document.getElementById('bridgeTagsContainer');
-    const btnCopyBridgeTags = document.getElementById('btnCopyBridgeTags');
+    const realTagsContainer = document.getElementById('realTagsContainer');
+    const realTagsCharCounter = document.getElementById('realTagsCharCounter');
+    const btnCopyRealTags = document.getElementById('btnCopyRealTags');
+    const realTagsSourceBadge = document.getElementById('realTagsSourceBadge');
     const vacuumsList = document.getElementById('vacuumsList');
+    const spyDescContent = document.getElementById('spyDescContent');
+    const btnCopyDesc = document.getElementById('btnCopyDesc');
+    const extractedLinksList = document.getElementById('extractedLinksList');
+    const extractedHashtagsList = document.getElementById('extractedHashtagsList');
+
     const revenueRangeText = document.getElementById('revenueRangeText');
-    const revenueNoteText = document.getElementById('revenueNoteText');
+    const revenueFormulaText = document.getElementById('revenueFormulaText');
+    const revenueMultiplierBadge = document.getElementById('revenueMultiplierBadge');
+    const revenueNicheSelect = document.getElementById('revenueNicheSelect');
     const revenueRegionSelect = document.getElementById('revenueRegionSelect');
     const revenueViewsInput = document.getElementById('revenueViewsInput');
     const pinnedCommentsList = document.getElementById('pinnedCommentsList');
 
-    let currentCompetitorMeta = null;
-    let currentBridgeTags = [];
+    let currentCompetitorData = null;
 
     async function executeSpy() {
       const rawUrl = competitorUrlInput.value.trim();
@@ -1205,36 +1296,42 @@
       }
 
       btnRunSpy.disabled = true;
-      btnRunSpy.innerHTML = '<span>⚡ Spying...</span>';
+      btnRunSpy.innerHTML = '<span>⚡ Inspecting Source...</span>';
 
       try {
-        const metaResult = await TjpCompetitorSpy.fetchPublicVideoMeta(videoId);
+        // Deep inspection: raw HTML tags + fallback
+        const meta = await TjpCompetitorSpy.inspectCompetitorVideo(videoId);
 
-        if (!metaResult.success) {
-          alert(`⚠️ ${metaResult.error}`);
+        if (!meta.success) {
+          alert(`⚠️ ${meta.error}`);
           return;
         }
 
-        currentCompetitorMeta = metaResult;
+        currentCompetitorData = meta;
         spyOutputContainer.style.display = 'flex';
 
         // 1. Render Video Profile
-        spyThumbImg.src = metaResult.thumbnailUrl;
-        btnDownloadThumbLink.href = metaResult.thumbnailUrl;
-        btnDownloadThumbLink.setAttribute('download', `thumb_${videoId}.jpg`);
-        spyVideoTitle.innerText = metaResult.title;
-        spyAuthorName.innerText = metaResult.authorName;
-        spyAuthorLink.href = metaResult.authorUrl;
+        spyThumbImg.src = meta.thumbnailKit.maxres;
+        spyThumbImg.onerror = () => { spyThumbImg.src = meta.thumbnailKit.hd; };
+        
+        btnThumb1080.href = meta.thumbnailKit.maxres;
+        btnThumb720.href = meta.thumbnailKit.hd;
+        btnThumb480.href = meta.thumbnailKit.sd;
 
-        // 2. Infiltration Tags (Clean Delimiter Split)
-        const infiltration = TjpCompetitorSpy.extractSuggestedVideoAnchors(metaResult.title, metaResult.authorName);
-        currentBridgeTags = infiltration.suggestedBridgeTags;
-        bridgeTagsContainer.innerHTML = currentBridgeTags.map(t => `
-          <span class="tag-chip selected">${t}</span>
-        `).join('');
+        spyVideoTitle.innerText = meta.title;
+        spyAuthorName.innerText = meta.authorName;
+        spyAuthorLink.href = meta.authorUrl;
+
+        // Duration & Mid-roll Badge
+        spyDurationBadge.innerText = `⏱️ ${meta.formattedDuration} • ${meta.isMidrollEligible ? '✅ 8+ Min (Mid-Rolls Active)' : '⚠️ Under 8 Min'}`;
+        spyDurationBadge.className = meta.isMidrollEligible ? 'badge-metric comp-green' : 'badge-metric comp-yellow';
+
+        // 2. Real Hidden Tags
+        renderRealTags(meta.realTags);
+        realTagsSourceBadge.innerText = meta.dataSource === 'raw_html_full_scrape' ? 'Page Source (100% Real)' : 'Extracted Anchors';
 
         // 3. Niche-Adaptive Content Vacuums
-        const vacuums = TjpCompetitorSpy.detectContentVacuums(targetTopic, metaResult.title);
+        const vacuums = TjpCompetitorSpy.detectContentVacuums(targetTopic, meta.title);
         vacuumsList.innerHTML = vacuums.map(v => `
           <div class="vacuum-item">
             <span class="vacuum-topic">+ ${v.topic}</span>
@@ -1242,11 +1339,19 @@
           </div>
         `).join('');
 
-        // 4. Regional Revenue Guide
+        // 4. Description, Links, and Hashtags
+        spyDescContent.innerText = meta.description;
+        extractedLinksList.innerHTML = meta.externalLinks.length > 0 
+          ? meta.externalLinks.map(l => `<a href="${l}" target="_blank" style="color:var(--accent-blue); display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">🔗 ${l}</a>`).join('')
+          : '<span style="color:var(--text-muted);">No external links found in description.</span>';
+
+        extractedHashtagsList.innerText = meta.hashtags.length > 0 ? meta.hashtags.join(' ') : 'No #hashtags used.';
+
+        // 5. Ad Revenue Breakdown
         updateRevenueDisplay();
 
-        // 5. Niche-Adaptive Pinned Comments
-        const comments = TjpCompetitorSpy.generatePinnedComments(metaResult.title, targetTopic);
+        // 6. Niche-Adaptive Pinned Comments
+        const comments = TjpCompetitorSpy.generatePinnedComments(meta.title, targetTopic);
         pinnedCommentsList.innerHTML = comments.map((c, i) => `
           <div class="comment-card">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -1258,46 +1363,70 @@
         `).join('');
 
       } catch (err) {
-        alert('Failed to spy on video: ' + err.message);
+        alert('Failed to inspect video: ' + err.message);
       } finally {
         btnRunSpy.disabled = false;
         btnRunSpy.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg> Spy Video`;
       }
     }
 
-    function updateRevenueDisplay() {
-      const views = parseInt(revenueViewsInput.value, 10) || 50000;
-      const region = revenueRegionSelect ? revenueRegionSelect.value : 'india';
-      const rev = TjpCompetitorSpy.estimateRevenueRange(views, region);
-      revenueRangeText.innerText = rev.rangeText;
-      revenueNoteText.innerText = rev.note;
+    function renderRealTags(tags) {
+      const tagString = tags.join(',');
+      realTagsCharCounter.innerHTML = `<strong>${tagString.length}</strong> / 500 chars (${tags.length} tags)`;
+
+      if (tags.length === 0) {
+        realTagsContainer.innerHTML = '<span style="color:var(--text-muted); font-size:0.8rem;">No hidden tags detected on this video.</span>';
+        return;
+      }
+
+      realTagsContainer.innerHTML = tags.map(tag => `
+        <span class="tag-chip selected" onclick="navigator.clipboard.writeText('${tag.replace(/'/g, "\\'")}'); alert('Tag copied: ${tag.replace(/'/g, "\\'")}');">
+          ${tag} <small style="opacity:0.65;">(${tag.length})</small>
+        </span>
+      `).join('');
     }
 
-    if (revenueRegionSelect) revenueRegionSelect.addEventListener('change', updateRevenueDisplay);
+    function updateRevenueDisplay() {
+      if (!currentCompetitorData) return;
+      const views = parseInt(revenueViewsInput.value, 10) || 50000;
+      const niche = revenueNicheSelect.value;
+      const region = revenueRegionSelect.value;
+      const isMidroll = currentCompetitorData.isMidrollEligible;
+
+      const rev = TjpCompetitorSpy.estimateRevenueRange(views, niche, region, isMidroll);
+
+      revenueRangeText.innerText = rev.rangeText;
+      revenueFormulaText.innerText = rev.formulaExplainer;
+      revenueMultiplierBadge.innerText = rev.multiplierText;
+      revenueMultiplierBadge.className = isMidroll ? 'badge-metric comp-green' : 'badge-metric comp-yellow';
+    }
+
+    revenueNicheSelect.addEventListener('change', updateRevenueDisplay);
+    revenueRegionSelect.addEventListener('change', updateRevenueDisplay);
     revenueViewsInput.addEventListener('input', updateRevenueDisplay);
 
     btnCopyTitle.addEventListener('click', () => {
-      if (!currentCompetitorMeta) return;
-      navigator.clipboard.writeText(currentCompetitorMeta.title);
+      if (!currentCompetitorData) return;
+      navigator.clipboard.writeText(currentCompetitorData.title);
       alert('Title copied!');
     });
 
-    btnCopyEmbed.addEventListener('click', () => {
-      if (!currentCompetitorMeta) return;
-      navigator.clipboard.writeText(currentCompetitorMeta.embedHtml);
-      alert('Embed code copied!');
-    });
-
     btnCopyVideoUrl.addEventListener('click', () => {
-      if (!currentCompetitorMeta) return;
-      navigator.clipboard.writeText(currentCompetitorMeta.videoUrl);
+      if (!currentCompetitorData) return;
+      navigator.clipboard.writeText(currentCompetitorData.videoUrl);
       alert('Clean YouTube link copied!');
     });
 
-    btnCopyBridgeTags.addEventListener('click', () => {
-      if (currentBridgeTags.length === 0) return;
-      navigator.clipboard.writeText(currentBridgeTags.join(','));
-      alert('Bridge tags copied to clipboard!');
+    btnCopyRealTags.addEventListener('click', () => {
+      if (!currentCompetitorData || currentCompetitorData.realTags.length === 0) return;
+      navigator.clipboard.writeText(currentCompetitorData.realTags.join(','));
+      alert(`Copied all ${currentCompetitorData.realTags.length} tags to clipboard!`);
+    });
+
+    btnCopyDesc.addEventListener('click', () => {
+      if (!currentCompetitorData) return;
+      navigator.clipboard.writeText(currentCompetitorData.description);
+      alert('Full description copied!');
     });
 
     btnRunSpy.addEventListener('click', executeSpy);
