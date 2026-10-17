@@ -531,6 +531,80 @@
       flex-wrap: wrap;
     }
 
+    /* Weakness Diagnostic Cards */
+    .weakness-card {
+      background: #121824;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .weakness-card.critical { border-left: 3px solid var(--brand); }
+    .weakness-card.warning { border-left: 3px solid var(--accent-yellow); }
+    .weakness-card.good { border-left: 3px solid var(--accent-green); }
+
+    .weakness-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .weakness-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .weakness-advantage {
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      margin-top: 0.2rem;
+    }
+
+    /* Counter-Titles Cards */
+    .counter-title-card {
+      background: #121824;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .counter-title-strategy {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .counter-title-text {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.35;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 6px;
+      padding: 0.75rem;
+    }
+
+    .counter-title-why {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
     .vacuum-item {
       background: #121824;
       border: 1px solid var(--panel-border);
@@ -576,35 +650,6 @@
       gap: 0.5rem;
       align-items: center;
       flex-wrap: wrap;
-    }
-
-    .comment-card {
-      background: #121824;
-      border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .comment-type {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--brand);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .comment-text {
-      font-size: 0.85rem;
-      color: #e2e8f0;
-      line-height: 1.5;
-      white-space: pre-line;
-      background: #090d16;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 6px;
-      padding: 0.75rem;
     }
 
     pre.desc-inspector {
@@ -824,24 +869,24 @@
       </div>
     </section>
 
-    <!-- Studio 2: Competitor Video Spy (Pro Edition) -->
+    <!-- Studio 2: Competitor Video Spy (Pure Intelligence Edition) -->
     <section class="studio-panel" id="studio-2-content" style="display:none;">
       <div class="studio-header">
         <div>
           <div class="studio-title-area">
-            <h2>Competitor Video Spy & Hidden Metadata Grabber</h2>
+            <h2>Competitor Video Spy & Reverse-Engineering</h2>
             <div class="tooltip-icon">
               ⓘ
               <div class="tooltip-box">
                 <strong>How to Spy in 3 Steps:</strong><br/>
                 1. Paste any YouTube video URL or Shorts link.<br/>
                 2. Enter your target topic to spot missing content vacuums.<br/>
-                3. Click "Spy Video" to extract the real hidden tags, HD thumbnails, external links, and revenue math.
+                3. Click "Spy Video" to extract the real hidden tags, audit competitor flaws, and generate outrank counter-titles.
               </div>
             </div>
           </div>
           <p style="font-size:0.83rem; color:var(--text-muted); margin-top:0.3rem;">
-            Reverse-engineer competitor metadata, grab 100% real hidden tags from page source, and inspect 8-min mid-roll monetization.
+            Reverse-engineer competitor metadata, grab 100% real hidden tags from page source, exploit their flaws, and generate counter-titles.
           </p>
         </div>
       </div>
@@ -896,7 +941,35 @@
           </div>
         </div>
 
-        <!-- 2-Column: Real Hidden Tags & Content Vacuums -->
+        <!-- NEW: Competitor Weakness Diagnostic (The Attack Blueprint) -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="card-title">Competitor Weakness Diagnostic</span>
+              <span class="badge-metric comp-red" style="margin-left:0.5rem;">Attack Blueprint</span>
+            </div>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-muted);">
+            Vulnerabilities detected in this competitor's metadata that you can exploit to outrank them:
+          </p>
+          <div id="weaknessDiagnosticList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
+        </div>
+
+        <!-- NEW: Counter-Title Matrix (Engineered to Out-CTR This Video) -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <span class="card-title">Counter-Title Attack Matrix</span>
+              <span class="badge-metric comp-green" style="margin-left:0.5rem;">Higher CTR Formulas</span>
+            </div>
+          </div>
+          <p style="font-size:0.8rem; color:var(--text-muted);">
+            Direct psychological counter-attacks designed specifically to beat this competitor's title:
+          </p>
+          <div id="counterTitlesList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
+        </div>
+
+        <!-- 2-Column: Real Hidden Tags & Infiltration Bridge -->
         <div class="results-grid">
           <!-- Real Hidden Tags from HTML -->
           <div class="card">
@@ -916,18 +989,31 @@
             <div class="tag-chips-container" id="realTagsContainer" style="max-height:260px;"></div>
           </div>
 
-          <!-- Niche-Adaptive Content Vacuums -->
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">Detected Content Vacuums</span>
-              <span class="badge-metric comp-green">Opportunity</span>
+          <!-- "Up Next" Infiltration Bridge & Vacuums -->
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">"Up Next" Infiltration Tags</span>
+                <button class="copy-btn-sm" id="btnCopyBridgeTags">Copy Bridge Tags</button>
+              </div>
+              <div class="reassurance-banner">
+                🎯 <strong>Suggested Traffic Strategy:</strong> Copy these clean anchor tags into your video tags to signal to YouTube's algorithm to recommend your video under this competitor.
+              </div>
+              <div class="tag-chips-container" id="bridgeTagsContainer" style="max-height:120px;"></div>
             </div>
-            <p style="font-size:0.8rem; color:var(--text-muted);">High-traffic subtopics this competitor forgot to cover:</p>
-            <div id="vacuumsList" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+
+            <!-- Content Vacuums -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Detected Content Vacuums</span>
+                <span class="badge-metric comp-green">Opportunity</span>
+              </div>
+              <div id="vacuumsList" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Full Description, External Links & Hashtags Inspector -->
+        <!-- Full Description & External Links Inspector -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">Description & External Monetization Links</span>
@@ -993,17 +1079,6 @@
           </div>
         </div>
 
-        <!-- Niche-Adaptive Pinned Comments -->
-        <div class="card">
-          <div class="card-header">
-            <span class="card-title">Niche-Adaptive Pinned Comments</span>
-          </div>
-          <p style="font-size:0.82rem; color:var(--text-muted);">
-            Pre-written comments tailored to this content genre to kickstart early viewer discussion:
-          </p>
-          <div id="pinnedCommentsList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
-        </div>
-
       </div>
 
       <!-- FAQ Accordion -->
@@ -1014,7 +1089,7 @@
         </div>
         <div class="faq-body">
           <strong>The Problem Today:</strong> Most creators start videos from a blank sheet of paper, missing the high-performing hooks their competitors used and failing to spot what viewers wanted that competitors never covered.<br/><br/>
-          <strong>How TJP Fixes It:</strong> This tool extracts the competitor's exact public metadata, isolates their core tag co-occurrences so you can rank in their "Suggested Videos" feed, and exposes their "Content Vacuums" (missing topics) so your video has a distinct competitive advantage.
+          <strong>How TJP Fixes It:</strong> This tool extracts the competitor's exact public metadata, isolates their core tag co-occurrences so you can rank in their "Suggested Videos" feed, exposes their weaknesses (mobile cutoff, missing chapters), and gives you ready-to-use counter-titles to outrank them.
         </div>
       </div>
     </section>
@@ -1082,9 +1157,9 @@
 
   <!-- Scripts: Controller + Studio Modules with Cache-Busting -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.6';
-    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.6';
-    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.6';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.8';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.8';
+    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.8';
 
     // Header Session
     const userTierBadge = document.getElementById('userTierBadge');
@@ -1247,7 +1322,7 @@
     btnRunSearch.addEventListener('click', executeSearch);
 
     /* ==========================================================================
-       STUDIO 2 LOGIC (Competitor Video Spy - Pro Edition)
+       STUDIO 2 LOGIC (Competitor Video Spy - Pure Intelligence Edition)
        ========================================================================== */
     const competitorUrlInput = document.getElementById('competitorUrlInput');
     const targetTopicInput = document.getElementById('targetTopicInput');
@@ -1263,10 +1338,14 @@
     const spyDurationBadge = document.getElementById('spyDurationBadge');
     const btnCopyTitle = document.getElementById('btnCopyTitle');
     const btnCopyVideoUrl = document.getElementById('btnCopyVideoUrl');
+    const weaknessDiagnosticList = document.getElementById('weaknessDiagnosticList');
+    const counterTitlesList = document.getElementById('counterTitlesList');
     const realTagsContainer = document.getElementById('realTagsContainer');
     const realTagsCharCounter = document.getElementById('realTagsCharCounter');
     const btnCopyRealTags = document.getElementById('btnCopyRealTags');
     const realTagsSourceBadge = document.getElementById('realTagsSourceBadge');
+    const bridgeTagsContainer = document.getElementById('bridgeTagsContainer');
+    const btnCopyBridgeTags = document.getElementById('btnCopyBridgeTags');
     const vacuumsList = document.getElementById('vacuumsList');
     const spyDescContent = document.getElementById('spyDescContent');
     const btnCopyDesc = document.getElementById('btnCopyDesc');
@@ -1279,9 +1358,9 @@
     const revenueNicheSelect = document.getElementById('revenueNicheSelect');
     const revenueRegionSelect = document.getElementById('revenueRegionSelect');
     const revenueViewsInput = document.getElementById('revenueViewsInput');
-    const pinnedCommentsList = document.getElementById('pinnedCommentsList');
 
     let currentCompetitorData = null;
+    let currentBridgeTags = [];
 
     async function executeSpy() {
       const rawUrl = competitorUrlInput.value.trim();
@@ -1296,10 +1375,9 @@
       }
 
       btnRunSpy.disabled = true;
-      btnRunSpy.innerHTML = '<span>⚡ Inspecting Source...</span>';
+      btnRunSpy.innerHTML = '<span>⚡ Reverse-Engineering...</span>';
 
       try {
-        // Deep inspection: raw HTML tags + fallback
         const meta = await TjpCompetitorSpy.inspectCompetitorVideo(videoId);
 
         if (!meta.success) {
@@ -1310,7 +1388,7 @@
         currentCompetitorData = meta;
         spyOutputContainer.style.display = 'flex';
 
-        // 1. Render Video Profile
+        // 1. Render Video Profile & Thumbnails
         spyThumbImg.src = meta.thumbnailKit.maxres;
         spyThumbImg.onerror = () => { spyThumbImg.src = meta.thumbnailKit.hd; };
         
@@ -1322,15 +1400,47 @@
         spyAuthorName.innerText = meta.authorName;
         spyAuthorLink.href = meta.authorUrl;
 
-        // Duration & Mid-roll Badge
+        // Duration & Mid-Roll Badge
         spyDurationBadge.innerText = `⏱️ ${meta.formattedDuration} • ${meta.isMidrollEligible ? '✅ 8+ Min (Mid-Rolls Active)' : '⚠️ Under 8 Min'}`;
         spyDurationBadge.className = meta.isMidrollEligible ? 'badge-metric comp-green' : 'badge-metric comp-yellow';
 
-        // 2. Real Hidden Tags
-        renderRealTags(meta.realTags);
-        realTagsSourceBadge.innerText = meta.dataSource === 'raw_html_full_scrape' ? 'Page Source (100% Real)' : 'Extracted Anchors';
+        // 2. Competitor Weakness Diagnostic
+        const weaknesses = TjpCompetitorSpy.auditCompetitorWeaknesses(meta.title, meta.description, meta.realTags, meta.durationSeconds, targetTopic);
+        weaknessDiagnosticList.innerHTML = weaknesses.map(w => `
+          <div class="weakness-card ${w.severity}">
+            <span class="weakness-title">${w.type}</span>
+            <p class="weakness-desc">${w.finding}</p>
+            <div class="weakness-advantage">💡 <strong>Your Attack Move:</strong> ${w.attackAdvantage}</div>
+          </div>
+        `).join('');
 
-        // 3. Niche-Adaptive Content Vacuums
+        // 3. Counter-Title Matrix
+        const counterTitles = TjpCompetitorSpy.generateCounterTitles(meta.title, targetTopic);
+        counterTitlesList.innerHTML = counterTitles.map((t, idx) => `
+          <div class="counter-title-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="counter-title-strategy">${t.strategy}</span>
+              <button class="copy-btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('ct_${idx}').innerText); alert('Counter-title copied!');">Copy</button>
+            </div>
+            <div class="counter-title-text" id="ct_${idx}">${t.title}</div>
+            <p class="counter-title-why">🎯 <strong>Why it beats them:</strong> ${t.whyItWins}</p>
+          </div>
+        `).join('');
+
+        // 4. Real Hidden Tags
+        renderRealTags(meta.realTags);
+        realTagsSourceBadge.innerText = meta.dataSource === 'open_source_invidious' 
+          ? 'Live Invidious Node (100% Real)' 
+          : meta.dataSource === 'raw_html_scrape' 
+          ? 'Page Source (<meta> keywords)' 
+          : 'Extracted Anchors';
+
+        // 5. "Up Next" Infiltration Bridge Tags
+        const infiltration = TjpCompetitorSpy.extractSuggestedVideoAnchors(meta.title, meta.authorName);
+        currentBridgeTags = infiltration.suggestedBridgeTags;
+        bridgeTagsContainer.innerHTML = currentBridgeTags.map(t => `<span class="tag-chip selected">${t}</span>`).join('');
+
+        // 6. Niche-Adaptive Content Vacuums
         const vacuums = TjpCompetitorSpy.detectContentVacuums(targetTopic, meta.title);
         vacuumsList.innerHTML = vacuums.map(v => `
           <div class="vacuum-item">
@@ -1339,7 +1449,7 @@
           </div>
         `).join('');
 
-        // 4. Description, Links, and Hashtags
+        // 7. Description, Links, and Hashtags
         spyDescContent.innerText = meta.description;
         extractedLinksList.innerHTML = meta.externalLinks.length > 0 
           ? meta.externalLinks.map(l => `<a href="${l}" target="_blank" style="color:var(--accent-blue); display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">🔗 ${l}</a>`).join('')
@@ -1347,20 +1457,8 @@
 
         extractedHashtagsList.innerText = meta.hashtags.length > 0 ? meta.hashtags.join(' ') : 'No #hashtags used.';
 
-        // 5. Ad Revenue Breakdown
+        // 8. Ad Revenue Breakdown
         updateRevenueDisplay();
-
-        // 6. Niche-Adaptive Pinned Comments
-        const comments = TjpCompetitorSpy.generatePinnedComments(meta.title, targetTopic);
-        pinnedCommentsList.innerHTML = comments.map((c, i) => `
-          <div class="comment-card">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="comment-type">${c.type}</span>
-              <button class="copy-btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('c_text_${i}').innerText); alert('Comment copied!');">Copy</button>
-            </div>
-            <div class="comment-text" id="c_text_${i}">${c.text}</div>
-          </div>
-        `).join('');
 
       } catch (err) {
         alert('Failed to inspect video: ' + err.message);
@@ -1421,6 +1519,12 @@
       if (!currentCompetitorData || currentCompetitorData.realTags.length === 0) return;
       navigator.clipboard.writeText(currentCompetitorData.realTags.join(','));
       alert(`Copied all ${currentCompetitorData.realTags.length} tags to clipboard!`);
+    });
+
+    btnCopyBridgeTags.addEventListener('click', () => {
+      if (currentBridgeTags.length === 0) return;
+      navigator.clipboard.writeText(currentBridgeTags.join(','));
+      alert('Bridge tags copied to clipboard!');
     });
 
     btnCopyDesc.addEventListener('click', () => {
