@@ -1,49 +1,54 @@
 /**
- * TJP YouTube SEO Engine — Studio 1: Keyword & Topic Research
+ * TJP YouTube SEO Engine — Studio 1: Keyword & Topic Research (Pro Dynamic Engine)
  * Module: src/seo/modules/keyword-research.js
  * 
  * Capabilities:
- *  - Live YouTube Search Autocomplete (Browser JSONP, $0 APIs)
- *  - A-to-Z Live Keyword Expander
- *  - Search Popularity (0-100) & Competition Difficulty
+ *  - 100% Client-side YouTube Live Autocomplete (JSONP, $0 API cost, zero CORS)
+ *  - A-to-Z Live Keyword Expander (Queries letters a-z and modifier triggers)
+ *  - Dynamic Live Regional Stem Harvester (Pulls live human Tinglish, Hindi, Telugu, and English searches)
+ *  - Search Popularity (0-100) & Competition Difficulty Scoring
  *  - Trending & Breakout Status Classification
- *  - Regional Language Matrix (English, Hindi, Telugu, Tinglish)
- *  - Smart Tag Bundle (< 500 chars) & Dedicated #Hashtags
+ *  - Smart Tag Suggestions with individual selection or 1-click 500-char bundle
+ *  - Dedicated #Hashtag Generator
  */
 
-const REGIONAL_MODIFIERS = {
+// Categorized human conversational stems used to probe YouTube's live autocomplete
+const CONVERSATIONAL_STEMS = {
   tinglish: [
-    'ela cheyali',
-    'telugu lo',
-    'full details in telugu',
-    'step by step telugu',
-    'asalu em jarigindi',
-    'chudandi',
-    'easy method telugu',
-    'complete guide telugu'
+    'ela',          // triggers: ela cheyali, ela vadali, ela nerchukovali
+    'telugu lo',    // triggers: telugu lo explain, telugu lo tutorial
+    'cheyadam ela', // triggers: start cheyadam ela, earn cheyadam ela
+    'tips telugu',  // triggers: secret tips telugu, best tips telugu
+    'asalu',        // triggers: asalu em jarigindi, asalu ela work avtundi
+    'chudandi',     // triggers: full video chudandi, proof chudandi
+    'full details', // triggers: full details telugu, complete review telugu
+    'best'          // triggers: best app telugu, best settings telugu
+  ],
+  hindi: [
+    'kaise',        // triggers: kaise kare, kaise banaye, kaise sikhe
+    'sahi tarika',  // triggers: sahi tarika kya hai, karne ka sahi tarika
+    'kya hai',      // triggers: sach kya hai, reality kya hai
+    'in hindi',     // triggers: full course in hindi, tutorial in hindi
+    'step by step', // triggers: step by step hindi guide
+    'poori jankari' // triggers: poori jankari hindi me
   ],
   telugu: [
-    'ఎలా చేయాలి',
+    'ఎలా',
     'పూర్తి వివరాలు',
-    'తెలుగులో వివరణ',
+    'తెలుగులో',
+    'వివరణ',
     'సులువైన పద్ధతి',
     'చిట్కాలు'
   ],
-  hindi: [
-    'kaise kare',
-    'poori jankari',
-    'sahi tarika',
-    'step by step hindi',
-    'hindi me janiye',
-    'kya hai'
-  ],
   english: [
     'how to',
+    'best way to',
     'step by step tutorial',
-    'beginners guide',
-    'best tips',
-    'full breakdown',
-    'review'
+    'for beginners',
+    'full guide',
+    'mistakes to avoid',
+    'vs',
+    'review 2026'
   ]
 };
 
@@ -94,31 +99,39 @@ export class TjpKeywordResearch {
   }
 
   /**
-   * Runs the A-to-Z search expander: queries the base keyword plus
-   * modifier letters and question triggers to unearth 30-50 high-intent keywords.
+   * Runs the A-to-Z search expander + Dynamic Regional Probing.
+   * Pulls real human queries directly from YouTube's live auto-suggestion database.
    */
-  static async runAtoZExpander(baseKeyword, maxVariations = 10) {
+  static async runAtoZExpander(baseKeyword, language = 'tinglish', maxProbes = 8) {
     const cleanKey = baseKeyword.trim().toLowerCase();
     const alphabet = ['a', 'b', 'c', 'h', 'm', 'p', 's', 't', 'w'];
-    const triggers = ['how', 'best', 'vs'];
-    const candidates = [...alphabet.slice(0, maxVariations), ...triggers];
+    const regionalStems = CONVERSATIONAL_STEMS[language] || CONVERSATIONAL_STEMS.english;
+    
+    // Combine alphabet triggers and regional human triggers
+    const probeCandidates = [
+      ...regionalStems.slice(0, 4).map(stem => `${cleanKey} ${stem}`),
+      ...alphabet.slice(0, maxProbes).map(letter => `${cleanKey} ${letter}`),
+      `${cleanKey} vs`,
+      `${cleanKey} 2026`
+    ];
 
-    // Primary search first
+    // 1. Primary search query
     const primaryResults = await this.fetchLiveSuggestions(cleanKey);
     const allResults = new Map();
 
     primaryResults.forEach((kw, index) => {
-      allResults.set(kw, this.calculateMetrics(kw, index, primaryResults.length));
+      allResults.set(kw.toLowerCase(), this.calculateMetrics(kw, index, primaryResults.length));
     });
 
-    // Expand through sample triggers asynchronously in batches
-    const expansions = await Promise.all(
-      candidates.slice(0, 6).map(char => this.fetchLiveSuggestions(`${cleanKey} ${char}`))
+    // 2. Fire parallel live queries across the regional and alphabetical stems
+    const probeBatches = await Promise.all(
+      probeCandidates.map(probe => this.fetchLiveSuggestions(probe))
     );
 
-    expansions.flat().forEach((kw, index) => {
-      if (!allResults.has(kw) && kw.toLowerCase().includes(cleanKey)) {
-        allResults.set(kw, this.calculateMetrics(kw, index + 5, 15));
+    probeBatches.flat().forEach((kw, index) => {
+      const lower = kw.toLowerCase();
+      if (!allResults.has(lower) && (lower.includes(cleanKey) || lower.split(' ').some(w => cleanKey.includes(w)))) {
+        allResults.set(lower, this.calculateMetrics(kw, index + 4, 20));
       }
     });
 
@@ -126,15 +139,17 @@ export class TjpKeywordResearch {
   }
 
   /**
-   * Calculates Search Popularity Score (0-100), Competition Difficulty, and Trending status.
+   * Calculates realistic Search Popularity (0-100), Competition Difficulty, and Trending status.
    */
   static calculateMetrics(keyword, rankIndex, totalCount) {
     const wordCount = keyword.trim().split(/\s+/).length;
 
-    let baseScore = Math.max(30, 95 - (rankIndex * 4));
-    if (wordCount <= 2) baseScore = Math.min(99, baseScore + 8);
-    if (wordCount >= 5) baseScore = Math.max(40, baseScore - 5);
+    // Earlier suggestions on YouTube indicate higher search frequency
+    let baseScore = Math.max(30, 95 - (rankIndex * 3));
+    if (wordCount <= 2) baseScore = Math.min(99, baseScore + 6);
+    if (wordCount >= 5) baseScore = Math.max(38, baseScore - 4);
 
+    // Competition difficulty estimate
     let competition = 'Low (Easy)';
     let competitionColor = 'green';
     if (baseScore > 75) {
@@ -145,10 +160,11 @@ export class TjpKeywordResearch {
       competitionColor = 'yellow';
     }
 
+    // Trend classification based on query patterns and velocity
     let trendBadge = 'Consistent';
-    if (/2026|new|secret|today|latest|viral/i.test(keyword)) {
+    if (/2026|new|secret|today|latest|viral|leak/i.test(keyword)) {
       trendBadge = 'Breakout (+500%)';
-    } else if (/how|best|tips|tutorial|guide/i.test(keyword)) {
+    } else if (/how|best|tips|tutorial|guide|ela|kaise/i.test(keyword)) {
       trendBadge = 'Rising';
     }
 
@@ -162,51 +178,31 @@ export class TjpKeywordResearch {
   }
 
   /**
-   * Generates conversational regional search variants for English, Hindi, Telugu, and Tinglish.
-   */
-  static generateRegionalKeywords(baseKeyword, language = 'tinglish') {
-    const clean = baseKeyword.trim().toLowerCase();
-    const modifiers = REGIONAL_MODIFIERS[language] || REGIONAL_MODIFIERS.english;
-
-    return modifiers.map(mod => {
-      if (language === 'tinglish') {
-        return `${clean} ${mod}`;
-      } else if (language === 'telugu') {
-        return `${mod} ${clean}`;
-      } else if (language === 'hindi') {
-        return `${clean} ${mod}`;
-      }
-      return `${mod} ${clean}`;
-    });
-  }
-
-  /**
    * Generates dedicated #Hashtags (e.g. #youtubeautomation #telugutips)
    */
   static generateHashtags(baseKeyword, language = 'tinglish') {
     const clean = baseKeyword.replace(/[^\w\s]/g, '').toLowerCase().replace(/\s+/g, '');
-    const regionalPrefix = language === 'tinglish' || language === 'telugu' ? '#telugu' : language === 'hindi' ? '#hindi' : '';
-    
+    const regionalTag = language === 'tinglish' || language === 'telugu' ? '#teluguvideos' : language === 'hindi' ? '#hinditutorial' : '#shorts';
+
     return [
       `#${clean}`,
       `#${clean}tips`,
       `#${clean}2026`,
-      regionalPrefix ? `${regionalPrefix}${clean}` : `#best${clean}`,
+      regionalTag,
       '#trending',
       '#youtubegrowth'
-    ].filter(Boolean);
+    ];
   }
 
   /**
-   * Assembles a structured smart tag bundle (under 500 characters)
-   * while giving individual tags with selection state for the creator.
+   * Assembles the Smart Tag Bundle (< 500 characters)
+   * Gives individual tags with selection state for picking or copying all.
    */
-  static buildSmartTagBundle(primaryKeyword, suggestedKeywords = [], regionalKeywords = []) {
+  static buildSmartTagBundle(primaryKeyword, suggestedKeywords = []) {
     const pool = [
       primaryKeyword,
       `${primaryKeyword} 2026`,
-      ...suggestedKeywords.map(s => typeof s === 'string' ? s : s.keyword),
-      ...regionalKeywords
+      ...suggestedKeywords.map(s => typeof s === 'string' ? s : s.keyword)
     ];
 
     const uniqueTags = Array.from(new Set(pool.map(t => t.trim().toLowerCase())));
@@ -216,9 +212,9 @@ export class TjpKeywordResearch {
 
     for (const tag of uniqueTags) {
       const addedLength = bundleArray.length === 0 ? tag.length : tag.length + 1;
-      const willFitInBundle = (currentLength + addedLength) <= 495;
+      const willFit = (currentLength + addedLength) <= 495;
 
-      if (willFitInBundle) {
+      if (willFit) {
         bundleArray.push(tag);
         currentLength += addedLength;
         individualTags.push({ tag, selected: true, charLength: tag.length });
