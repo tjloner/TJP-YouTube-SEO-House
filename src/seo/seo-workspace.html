@@ -6,7 +6,7 @@
   <title>TJP YouTube SEO Studio | Rank Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --brand: #fd5d5d;
@@ -19,6 +19,7 @@
       --text-muted: #94a3b8;
       --accent-green: #10b981;
       --accent-yellow: #f59e0b;
+      --accent-blue: #38bdf8;
       --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
@@ -38,7 +39,7 @@
       background: rgba(18, 24, 36, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--panel-border);
-      padding: 1rem 2rem;
+      padding: 0.85rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -52,7 +53,7 @@
       align-items: center;
       gap: 0.75rem;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       letter-spacing: -0.02em;
     }
 
@@ -65,21 +66,59 @@
       font-weight: 700;
     }
 
-    .status-badge {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tier-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tier-badge.badge-expired {
+      background: rgba(253, 93, 93, 0.1);
+      color: var(--brand);
+      border-color: rgba(253, 93, 93, 0.3);
+    }
+
+    .tier-badge.badge-pro {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent-green);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .admin-btn {
+      background: #1e293b;
+      color: var(--text-muted);
+      border: 1px solid var(--panel-border);
       font-family: var(--font-mono);
       font-size: 0.75rem;
       padding: 0.35rem 0.75rem;
-      border-radius: 9999px;
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--accent-green);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    /* Workspace 2-Column Grid */
+    .admin-btn:hover {
+      color: #fff;
+      border-color: var(--brand);
+    }
+
+    /* Workspace Grid */
     main {
       flex: 1;
       display: grid;
-      grid-template-columns: 430px 1fr;
+      grid-template-columns: 420px 1fr;
       gap: 1.5rem;
       padding: 1.5rem 2rem;
       max-width: 1700px;
@@ -91,7 +130,6 @@
       main { grid-template-columns: 1fr; }
     }
 
-    /* Panels */
     .panel {
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
@@ -118,7 +156,6 @@
       margin-top: 0.2rem;
     }
 
-    /* Input Forms */
     .field-group {
       display: flex;
       flex-direction: column;
@@ -177,10 +214,8 @@
 
     .btn-primary:hover {
       background: var(--brand-hover);
-      transform: translateY(-1px);
     }
 
-    /* Results Dashboard (Right Column) */
     .dashboard-grid {
       display: flex;
       flex-direction: column;
@@ -202,7 +237,7 @@
     }
 
     .card-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -217,7 +252,6 @@
       padding: 0.25rem 0.6rem;
       font-size: 0.75rem;
       cursor: pointer;
-      font-family: inherit;
       transition: all 0.15s;
     }
 
@@ -226,7 +260,6 @@
       color: #fff;
     }
 
-    /* Titles Section */
     .title-item {
       background: #141c2a;
       border: 1px solid rgba(255, 255, 255, 0.04);
@@ -239,127 +272,88 @@
       gap: 1rem;
     }
 
-    .title-item .title-text {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: #fff;
-    }
+    .title-text { font-size: 0.92rem; font-weight: 600; color: #fff; }
+    .title-badges { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .tier-badge-label { font-size: 0.7rem; background: #1e293b; padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-muted); }
+    .score-badge { font-size: 0.7rem; font-family: var(--font-mono); font-weight: 700; background: rgba(253, 93, 93, 0.15); color: var(--brand); padding: 0.2rem 0.5rem; border-radius: 4px; }
 
-    .title-badges {
-      display: flex;
+    .pill-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill { font-size: 0.78rem; padding: 0.35rem 0.75rem; border-radius: 6px; background: #162030; border: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; }
+    .pill.gap-critical { border-color: rgba(253, 93, 93, 0.5); color: #fda4af; background: rgba(253, 93, 93, 0.1); }
+
+    .tag-box { font-family: var(--font-mono); font-size: 0.8rem; background: #090d16; border: 1px solid var(--panel-border); border-radius: 8px; padding: 0.75rem; color: #94a3b8; max-height: 90px; overflow-y: auto; word-break: break-all; }
+    .char-counter { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+
+    pre.desc-preview { background: #090d16; border: 1px solid var(--panel-border); border-radius: 8px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap; max-height: 220px; overflow-y: auto; line-height: 1.5; }
+
+    .brief-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+    @media (max-width: 768px) { .brief-grid { grid-template-columns: 1fr; } }
+    .brief-item { background: #141c2a; border-radius: 8px; padding: 0.8rem; font-size: 0.8rem; line-height: 1.4; }
+    .brief-item strong { display: block; color: var(--brand); font-size: 0.75rem; margin-bottom: 0.3rem; text-transform: uppercase; }
+
+    /* Admin Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
       align-items: center;
-      gap: 0.5rem;
-      flex-shrink: 0;
+      justify-content: center;
+      z-index: 100;
     }
 
-    .tier-badge {
-      font-size: 0.7rem;
-      background: #1e293b;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      color: var(--text-muted);
-    }
+    .modal-overlay.active { display: flex; }
 
-    .score-badge {
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      background: rgba(253, 93, 93, 0.15);
-      color: var(--brand);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    /* Content Gaps / Tags Cloud */
-    .pill-cloud {
+    .admin-card {
+      background: #121824;
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 580px;
+      padding: 1.75rem;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
-    .pill {
-      font-size: 0.78rem;
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      background: #162030;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      color: #cbd5e1;
-    }
-
-    .pill.gap-critical {
-      border-color: rgba(253, 93, 93, 0.5);
-      color: #fda4af;
-      background: rgba(253, 93, 93, 0.1);
-    }
-
-    /* Tags Textbox Box */
-    .tag-box {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      background: #090d16;
-      border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      padding: 0.75rem;
-      color: #94a3b8;
-      max-height: 90px;
-      overflow-y: auto;
-      word-break: break-all;
-    }
-
-    .char-counter {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    /* Description Preview */
-    pre.desc-preview {
-      background: #090d16;
-      border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: #cbd5e1;
-      white-space: pre-wrap;
-      max-height: 220px;
-      overflow-y: auto;
-      line-height: 1.5;
-    }
-
-    /* Strategy Brief Box */
-    .brief-grid {
+    .admin-actions-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 0.75rem;
     }
 
-    @media (max-width: 768px) {
-      .brief-grid { grid-template-columns: 1fr; }
-    }
-
-    .brief-item {
-      background: #141c2a;
-      border-radius: 8px;
-      padding: 0.8rem;
+    .admin-btn-action {
+      background: #1a2333;
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      padding: 0.65rem 0.9rem;
+      border-radius: 6px;
       font-size: 0.8rem;
-      line-height: 1.4;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .brief-item strong {
-      display: block;
-      color: var(--brand);
-      font-size: 0.75rem;
-      margin-bottom: 0.3rem;
-      text-transform: uppercase;
+    .admin-btn-action:hover {
+      border-color: var(--brand);
+      background: #202c40;
     }
 
-    /* Placeholder state */
-    .empty-state {
+    .danger-notice {
+      background: rgba(253, 93, 93, 0.08);
+      border: 1px solid rgba(253, 93, 93, 0.25);
+      padding: 1.5rem;
+      border-radius: 10px;
       text-align: center;
-      padding: 4rem 1rem;
-      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
+
+    .danger-notice h3 { color: var(--brand); font-size: 1.1rem; }
+    .danger-notice p { font-size: 0.85rem; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -370,12 +364,14 @@
       <span class="brand-pill">TJP</span>
       <span>YouTube SEO Engine</span>
     </div>
-    <div class="status-badge" id="engineStatus">● Client-Side Engine Ready</div>
+    <div class="header-actions">
+      <div id="userTierBadge" class="tier-badge">⏳ Initializing Trial...</div>
+      <button class="admin-btn" id="btnOpenAdmin">⚙️ Admin Simulation</button>
+    </div>
   </header>
 
-  <!-- Workspace 2-Column Body -->
+  <!-- Main 2-Column Studio -->
   <main>
-    <!-- Left Column: Input Settings -->
     <section class="panel">
       <div class="panel-header">
         <h2>Input Engine Parameters</h2>
@@ -384,7 +380,7 @@
 
       <div class="field-group">
         <label for="targetKeyword">Target Keyword / Topic *</label>
-        <input type="text" id="targetKeyword" placeholder="e.g. youtube automation" value="youtube automation" />
+        <input type="text" id="targetKeyword" value="youtube automation" />
       </div>
 
       <div class="field-group">
@@ -404,7 +400,7 @@
 
       <div class="field-group">
         <label for="competitorSnippets">Competitor Titles / Snippets (One per line)</label>
-        <textarea id="competitorSnippets" placeholder="Paste 2-5 top performing competitor titles...">How to start YouTube Automation in 2026
+        <textarea id="competitorSnippets">How to start YouTube Automation in 2026
 YouTube Automation Exposed: The Brutal Truth
 Complete YouTube Automation Guide For Beginners</textarea>
       </div>
@@ -415,9 +411,8 @@ Complete YouTube Automation Guide For Beginners</textarea>
       </button>
     </section>
 
-    <!-- Right Column: Live Output Dashboard -->
-    <section class="panel" id="dashboardPanel">
-      <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <section class="panel">
+      <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
         <div>
           <h2>Strategy Dashboard</h2>
           <p>Signal-based output: Content gaps, titles & tag distribution.</p>
@@ -426,37 +421,112 @@ Complete YouTube Automation Guide For Beginners</textarea>
       </div>
 
       <div id="resultsContainer">
-        <div class="empty-state">Click <strong>Generate SEO Strategy</strong> to process keyword intent and vacuums.</div>
+        <!-- Rendered via Controller -->
       </div>
     </section>
   </main>
 
-  <!-- Client-side Logic Script Module -->
-  <script type="module">
-    import { TjpSeoEngine } from './seo-engine.js';
+  <!-- Admin Interface Simulation Modal -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="admin-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--panel-border); padding-bottom:0.75rem;">
+        <div>
+          <h2 style="font-size:1.1rem; color:#fff;">Admin Controls (tjpromotions.pro)</h2>
+          <p style="font-size:0.75rem; color:var(--text-muted);">Simulate admin subscription & trial management.</p>
+        </div>
+        <button class="copy-btn" id="btnCloseAdmin">✕ Close</button>
+      </div>
 
+      <div id="adminUserOverview" style="font-family:var(--font-mono); font-size:0.78rem; background:#090d16; padding:0.8rem; border-radius:6px; color:#94a3b8; line-height:1.6;">
+        <!-- Filled dynamically -->
+      </div>
+
+      <div class="field-group">
+        <label>Admin Override: Extend Trial Duration (Days)</label>
+        <div style="display:flex; gap:0.5rem;">
+          <input type="number" id="adminTrialDaysInput" min="1" max="90" value="3" />
+          <button class="admin-btn-action" id="btnAdminApplyDays" style="white-space:nowrap;">Apply Days</button>
+        </div>
+      </div>
+
+      <label>Quick Status Toggles</label>
+      <div class="admin-actions-grid">
+        <button class="admin-btn-action" id="btnAdminSetPro">🌟 Upgrade to Pro Member</button>
+        <button class="admin-btn-action" id="btnAdminSetExpired">⛔ Force Expire Trial</button>
+        <button class="admin-btn-action" id="btnAdminSetPending">⏳ Set Pending Review</button>
+        <button class="admin-btn-action" id="btnAdminResetTrial">🔄 Reset to Fresh 3-Day</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controller Script Module -->
+  <script type="module">
+    import { TjpSeoController } from './seo-controller.js';
+
+    const userTierBadge = document.getElementById('userTierBadge');
     const btnAnalyze = document.getElementById('btnAnalyze');
     const resultsContainer = document.getElementById('resultsContainer');
     const execMetric = document.getElementById('execMetric');
 
-    btnAnalyze.addEventListener('click', runEngine);
+    // Admin Modal Elements
+    const adminModal = document.getElementById('adminModal');
+    const btnOpenAdmin = document.getElementById('btnOpenAdmin');
+    const btnCloseAdmin = document.getElementById('btnCloseAdmin');
+    const adminUserOverview = document.getElementById('adminUserOverview');
+    const adminTrialDaysInput = document.getElementById('adminTrialDaysInput');
+    const btnAdminApplyDays = document.getElementById('btnAdminApplyDays');
+    const btnAdminSetPro = document.getElementById('btnAdminSetPro');
+    const btnAdminSetExpired = document.getElementById('btnAdminSetExpired');
+    const btnAdminSetPending = document.getElementById('btnAdminSetPending');
+    const btnAdminResetTrial = document.getElementById('btnAdminResetTrial');
 
-    function runEngine() {
+    // Initialize user session
+    let currentUser = TjpSeoController.getOrCreateSession();
+    updateUserBadge();
+
+    function updateUserBadge() {
+      currentUser = TjpSeoController.evaluateTrialHealth(currentUser);
+
+      if (currentUser.tier === 'active_member') {
+        userTierBadge.className = 'tier-badge badge-pro';
+        userTierBadge.innerHTML = '★ Pro Member (Unlimited)';
+      } else if (currentUser.tier === 'expired') {
+        userTierBadge.className = 'tier-badge badge-expired';
+        userTierBadge.innerHTML = '⛔ Trial Expired';
+      } else {
+        const elapsedDays = Math.floor((Date.now() - currentUser.trialStartDate) / (24 * 60 * 60 * 1000));
+        const daysLeft = Math.max(0, currentUser.trialDurationDays - elapsedDays);
+        userTierBadge.className = 'tier-badge';
+        userTierBadge.innerHTML = `⏳ ${currentUser.trialDurationDays}-Day Trial: ${daysLeft}d left • (${currentUser.queriesUsedToday}/${currentUser.maxDailyQueries} queries)`;
+      }
+    }
+
+    async function execute() {
       const keyword = document.getElementById('targetKeyword').value.trim();
       const language = document.getElementById('languageSelect').value;
-      const duration = parseInt(document.getElementById('durationInput').value, 10) || 10;
+      const duration = parseInt(document.getElementById('durationInput').value, 10) || 12;
       const competitorRaw = document.getElementById('competitorSnippets').value;
-      const competitorTitles = competitorRaw.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+      const competitorTitles = competitorRaw.split('\n').map(s => s.trim()).filter(Boolean);
 
-      const result = TjpSeoEngine.analyze({
+      const result = await TjpSeoController.executeAnalysis({
         targetKeyword: keyword,
         language: language,
         videoDurationMinutes: duration,
         competitorTitles: competitorTitles
       });
 
+      updateUserBadge();
+
       if (!result.success || !result.data) {
-        resultsContainer.innerHTML = `<div style="color: #fda4af; padding: 2rem;"><strong>Error:</strong> ${result.error || 'Failed to process.'}</div>`;
+        resultsContainer.innerHTML = `
+          <div class="danger-notice">
+            <h3>Access Notice</h3>
+            <p>${result.error}</p>
+            <a href="https://tjpromotions.pro" target="_blank" class="btn-primary" style="text-decoration:none; display:inline-flex; width:max-content; margin:0 auto; padding:0.6rem 1.2rem; font-size:0.85rem;">
+              Manage Subscription on tjpromotions.pro
+            </a>
+          </div>
+        `;
         return;
       }
 
@@ -467,86 +537,65 @@ Complete YouTube Automation Guide For Beginners</textarea>
     function renderOutput(data) {
       resultsContainer.innerHTML = `
         <div class="dashboard-grid">
-
-          <!-- Growth Brief -->
           <div class="card">
             <div class="card-title-row">
               <span class="card-title">Tactical Growth Brief</span>
-              <span class="status-badge">Intent: ${data.intent.toUpperCase()}</span>
+              <span class="tier-badge-label" style="color:var(--accent-green); background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3);">
+                INTENT: ${data.intent.toUpperCase()}
+              </span>
             </div>
             <div class="brief-grid">
-              <div class="brief-item">
-                <strong>Thumbnail Focus</strong>
-                ${data.strategyBrief.thumbnailVisualCue}
-              </div>
-              <div class="brief-item">
-                <strong>Retention Hook</strong>
-                ${data.strategyBrief.retentionHook}
-              </div>
-              <div class="brief-item">
-                <strong>Pacing</strong>
-                ${data.strategyBrief.recommendedPacing}
-              </div>
+              <div class="brief-item"><strong>Thumbnail Focus</strong>${data.strategyBrief.thumbnailVisualCue}</div>
+              <div class="brief-item"><strong>Retention Hook</strong>${data.strategyBrief.retentionHook}</div>
+              <div class="brief-item"><strong>Pacing</strong>${data.strategyBrief.recommendedPacing}</div>
             </div>
           </div>
 
-          <!-- Titles Matrix -->
           <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">5-Tier Psychological Titles</span>
-            </div>
-            <div id="titlesList">
-              ${data.titles.map(t => `
-                <div class="title-item">
-                  <span class="title-text">${t.title}</span>
-                  <div class="title-badges">
-                    <span class="tier-badge">${t.tier}</span>
-                    <span class="score-badge">Hook ${t.hookScore}</span>
-                    <button class="copy-btn" onclick="navigator.clipboard.writeText('${t.title.replace(/'/g, "\\'")}')">Copy</button>
-                  </div>
+            <div class="card-title-row"><span class="card-title">5-Tier Psychological Titles</span></div>
+            ${data.titles.map(t => `
+              <div class="title-item">
+                <span class="title-text">${t.title}</span>
+                <div class="title-badges">
+                  <span class="tier-badge-label">${t.tier}</span>
+                  <span class="score-badge">Hook ${t.hookScore}</span>
+                  <button class="copy-btn" onclick="navigator.clipboard.writeText('${t.title.replace(/'/g, "\\'")}')">Copy</button>
                 </div>
-              `).join('')}
-            </div>
+              </div>
+            `).join('')}
           </div>
 
-          <!-- Content Gaps / Vacuums -->
           <div class="card">
-            <div class="card-title-row">
-              <span class="card-title">Detected Competitor Content Vacuums</span>
-            </div>
+            <div class="card-title-row"><span class="card-title">Detected Competitor Vacuums</span></div>
             <div class="pill-cloud">
               ${data.contentGaps.length > 0
                 ? data.contentGaps.map(g => `<span class="pill ${g.gapSeverity === 'critical' ? 'gap-critical' : ''}">+ ${g.keyword} (${g.frequencyInCompetitors}x)</span>`).join('')
-                : '<span style="font-size:0.8rem; color: var(--text-muted);">No major content vacuums detected in provided competitor set.</span>'
+                : '<span style="font-size:0.8rem; color:var(--text-muted);">No major content vacuums detected in provided competitor set.</span>'
               }
             </div>
           </div>
 
-          <!-- Tag Cloud Allocation -->
           <div class="card">
             <div class="card-title-row">
               <span class="card-title">Compliant Tags (< 500 Chars)</span>
-              <div style="display:flex; align-items:center; gap:0.5rem;">
+              <div>
                 <span class="char-counter">${data.tags.charCount}/500 chars</span>
                 <button class="copy-btn" id="copyTagsBtn">Copy All</button>
               </div>
             </div>
-            <div class="tag-box" id="tagCloudBox">${data.tags.combinedTagString}</div>
+            <div class="tag-box">${data.tags.combinedTagString}</div>
           </div>
 
-          <!-- Description Template -->
           <div class="card">
             <div class="card-title-row">
               <span class="card-title">Structured Description & Chapters</span>
               <button class="copy-btn" id="copyDescBtn">Copy Description</button>
             </div>
-            <pre class="desc-preview" id="descContent">${data.description.formattedDescription}</pre>
+            <pre class="desc-preview">${data.description.formattedDescription}</pre>
           </div>
-
         </div>
       `;
 
-      // Copy Handlers
       document.getElementById('copyTagsBtn')?.addEventListener('click', () => {
         navigator.clipboard.writeText(data.tags.combinedTagString);
         alert('Tags copied to clipboard!');
@@ -558,8 +607,67 @@ Complete YouTube Automation Guide For Beginners</textarea>
       });
     }
 
-    // Run automatically on first load with defaults
-    runEngine();
+    // Admin Panel Controls
+    btnOpenAdmin.addEventListener('click', () => {
+      adminUserOverview.innerHTML = `
+        <strong>User ID:</strong> ${currentUser.userId}<br/>
+        <strong>Email:</strong> ${currentUser.email}<br/>
+        <strong>Tier:</strong> ${currentUser.tier.toUpperCase()}<br/>
+        <strong>Status:</strong> ${currentUser.approvalStatus.toUpperCase()}<br/>
+        <strong>Configured Trial Days:</strong> ${currentUser.trialDurationDays} days<br/>
+        <strong>Today's Usage:</strong> ${currentUser.queriesUsedToday} / ${currentUser.maxDailyQueries}
+      `;
+      adminTrialDaysInput.value = currentUser.trialDurationDays;
+      adminModal.classList.add('active');
+    });
+
+    btnCloseAdmin.addEventListener('click', () => adminModal.classList.remove('active'));
+
+    btnAdminApplyDays.addEventListener('click', () => {
+      const days = parseInt(adminTrialDaysInput.value, 10) || 3;
+      TjpSeoController.adminUpdateUser({ userId: currentUser.userId, overrideTrialDays: days });
+      currentUser = TjpSeoController.getOrCreateSession();
+      updateUserBadge();
+      adminModal.classList.remove('active');
+    });
+
+    btnAdminSetPro.addEventListener('click', () => {
+      TjpSeoController.adminUpdateUser({ userId: currentUser.userId, tier: 'active_member' });
+      currentUser = TjpSeoController.getOrCreateSession();
+      updateUserBadge();
+      adminModal.classList.remove('active');
+    });
+
+    btnAdminSetExpired.addEventListener('click', () => {
+      TjpSeoController.adminUpdateUser({ userId: currentUser.userId, tier: 'expired' });
+      currentUser = TjpSeoController.getOrCreateSession();
+      updateUserBadge();
+      adminModal.classList.remove('active');
+    });
+
+    btnAdminSetPending.addEventListener('click', () => {
+      TjpSeoController.adminUpdateUser({ userId: currentUser.userId, approvalStatus: 'pending' });
+      currentUser = TjpSeoController.getOrCreateSession();
+      updateUserBadge();
+      adminModal.classList.remove('active');
+    });
+
+    btnAdminResetTrial.addEventListener('click', () => {
+      TjpSeoController.adminUpdateUser({
+        userId: currentUser.userId,
+        tier: 'trial',
+        approvalStatus: 'approved',
+        overrideTrialDays: 3
+      });
+      currentUser = TjpSeoController.getOrCreateSession();
+      updateUserBadge();
+      adminModal.classList.remove('active');
+    });
+
+    btnAnalyze.addEventListener('click', execute);
+
+    // Initial run
+    execute();
   </script>
 </body>
 </html>
