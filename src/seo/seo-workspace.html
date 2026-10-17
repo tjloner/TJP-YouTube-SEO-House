@@ -306,6 +306,31 @@
 
     .btn-primary:hover { background: var(--brand-hover); }
 
+    /* Ingestion Mode Toggle Buttons */
+    .ingest-mode-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-mode {
+      background: #141c2a;
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-mode.active {
+      background: rgba(253, 93, 93, 0.15);
+      border-color: var(--brand);
+      color: #fff;
+    }
+
     /* Results Grids */
     .results-grid {
       display: grid;
@@ -879,7 +904,7 @@
               ⓘ
               <div class="tooltip-box">
                 <strong>How to Spy in 3 Steps:</strong><br/>
-                1. Paste any YouTube video URL or Shorts link.<br/>
+                1. Choose Mode: Paste YouTube URL OR paste snippet from view-source: directly.<br/>
                 2. Enter your target topic to spot missing content vacuums.<br/>
                 3. Click "Spy Video" to extract the real hidden tags, audit competitor flaws, and generate counter-titles.
               </div>
@@ -891,8 +916,14 @@
         </div>
       </div>
 
-      <!-- Spy Input Bar -->
-      <div class="spy-input-grid">
+      <!-- Ingestion Mode Selector Bar -->
+      <div class="ingest-mode-toggle">
+        <button class="btn-mode active" id="btnModeUrl">🔗 Mode 1: YouTube URL</button>
+        <button class="btn-mode" id="btnModeSource">⚡ Mode 2: Direct Source Paste (100% Offline)</button>
+      </div>
+
+      <!-- Mode 1: URL Input Bar -->
+      <div class="spy-input-grid" id="modeUrlBar">
         <input type="text" id="competitorUrlInput" placeholder="Paste YouTube Video URL (e.g. https://www.youtube.com/watch?v=... or shorts)" value="https://www.youtube.com/watch?v=ClbNTtzW88s" />
         <input type="text" id="targetTopicInput" placeholder="Your target topic (e.g. Stories)" value="Stories" />
         <button class="btn-primary" id="btnRunSpy">
@@ -901,16 +932,21 @@
         </button>
       </div>
 
-      <!-- 100% Offline View-Source Drop Box -->
-      <details style="background:#090d16; border:1px solid var(--panel-border); border-radius:8px; padding:0.75rem 1rem;">
-        <summary style="cursor:pointer; color:var(--accent-blue); font-size:0.82rem; font-weight:600;">
-          ⚡ Or Paste Raw View-Source Snippet (100% Offline Mode / Bypass All Network Blocks)
-        </summary>
-        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">
-          If an ISP proxy is ever slow, copy the <code style="color:var(--brand);">name="keyword"</code> line or any HTML from <code style="color:var(--brand);">view-source:</code> and paste it here. It parses in 0.01ms:
-        </p>
-        <textarea id="manualSourceInput" placeholder='Paste HTML or <meta name="keyword" content="tag1, tag2..."> snippet here...' style="margin-top:0.5rem; min-height:75px; font-family:var(--font-mono); font-size:0.78rem;"></textarea>
-      </details>
+      <!-- Mode 2: Direct Source Snippet Bar (100% Offline Bypass) -->
+      <div id="modeSourceBar" style="display:none; flex-direction:column; gap:0.5rem; background:#090d16; border:1px solid var(--panel-border); border-radius:8px; padding:1rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--accent-blue);">
+            ⚡ Paste Raw Page Source or Meta Tag Snippet:
+          </label>
+          <span style="font-size:0.72rem; color:var(--text-muted);">Bypasses all network proxies with 100% offline accuracy</span>
+        </div>
+        <textarea id="manualSourceInput" placeholder='Paste your view-source line here... (e.g. name="keyword" content="telugu kathalu, telugu stories, moral stories in telugu...")' style="min-height:85px; font-family:var(--font-mono); font-size:0.8rem;"></textarea>
+        <div style="display:flex; justify-content:flex-end;">
+          <button class="btn-primary" id="btnRunSourceSpy" style="padding:0.6rem 1.2rem; font-size:0.85rem;">
+            ⚡ Parse Source Snippet Offline
+          </button>
+        </div>
+      </div>
 
       <!-- Spy Output Dashboard -->
       <div id="spyOutputContainer" style="display:none; display:flex; flex-direction:column; gap:1.5rem;">
@@ -966,7 +1002,7 @@
           <div id="weaknessDiagnosticList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
         </div>
 
-        <!-- Counter-Title Matrix -->
+        <!-- Genre-Smart Counter-Title Matrix -->
         <div class="card">
           <div class="card-header">
             <div>
@@ -1168,9 +1204,9 @@
 
   <!-- Scripts: Controller + Studio Modules with Cache-Busting -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.9';
-    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.9';
-    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.9';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.10';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.10';
+    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.10';
 
     // Header Session
     const userTierBadge = document.getElementById('userTierBadge');
@@ -1333,12 +1369,18 @@
     btnRunSearch.addEventListener('click', executeSearch);
 
     /* ==========================================================================
-       STUDIO 2 LOGIC (Competitor Video Spy - Pro Edition)
+       STUDIO 2 LOGIC (Competitor Video Spy - Dual Mode)
        ========================================================================== */
     const competitorUrlInput = document.getElementById('competitorUrlInput');
     const targetTopicInput = document.getElementById('targetTopicInput');
     const manualSourceInput = document.getElementById('manualSourceInput');
     const btnRunSpy = document.getElementById('btnRunSpy');
+    const btnRunSourceSpy = document.getElementById('btnRunSourceSpy');
+    const btnModeUrl = document.getElementById('btnModeUrl');
+    const btnModeSource = document.getElementById('btnModeSource');
+    const modeUrlBar = document.getElementById('modeUrlBar');
+    const modeSourceBar = document.getElementById('modeSourceBar');
+
     const spyOutputContainer = document.getElementById('spyOutputContainer');
     const spyThumbImg = document.getElementById('spyThumbImg');
     const btnThumb1080 = document.getElementById('btnThumb1080');
@@ -1374,17 +1416,33 @@
     let currentCompetitorData = null;
     let currentBridgeTags = [];
 
-    async function executeSpy() {
+    // Ingestion Mode Switching
+    btnModeUrl.addEventListener('click', () => {
+      btnModeUrl.classList.add('active');
+      btnModeSource.classList.remove('active');
+      modeUrlBar.style.display = 'grid';
+      modeSourceBar.style.display = 'none';
+    });
+
+    btnModeSource.addEventListener('click', () => {
+      btnModeSource.classList.add('active');
+      btnModeUrl.classList.remove('active');
+      modeUrlBar.style.display = 'none';
+      modeSourceBar.style.display = 'flex';
+    });
+
+    async function executeSpy(isDirectSource = false) {
       const rawUrl = competitorUrlInput.value.trim();
       const targetTopic = targetTopicInput.value.trim() || 'Stories';
-      const manualSource = manualSourceInput ? manualSourceInput.value.trim() : '';
+      const manualSource = isDirectSource ? manualSourceInput.value.trim() : '';
 
       if (!rawUrl && !manualSource) return alert('Please enter a YouTube video URL or paste a source snippet.');
 
-      const videoId = TjpCompetitorSpy.extractVideoId(rawUrl) || 'custom_source';
+      const videoId = TjpCompetitorSpy.extractVideoId(rawUrl) || 'custom_video';
 
-      btnRunSpy.disabled = true;
-      btnRunSpy.innerHTML = '<span>⚡ Reverse-Engineering...</span>';
+      const triggerBtn = isDirectSource ? btnRunSourceSpy : btnRunSpy;
+      triggerBtn.disabled = true;
+      triggerBtn.innerHTML = '<span>⚡ Processing...</span>';
 
       try {
         const meta = await TjpCompetitorSpy.inspectCompetitorVideo(videoId, manualSource);
@@ -1410,11 +1468,11 @@
         spyAuthorLink.href = meta.authorUrl;
 
         // Exact Duration & Mid-Roll
-        spyDurationBadge.innerText = `⏱️ ${meta.formattedDuration} • ${meta.isMidrollEligible ? '✅ 8+ Min (Mid-Rolls Active)' : '⚠️ Under 8 Min'}`;
+        spyDurationBadge.innerText = `⏱️ ${meta.formattedDuration} • ${meta.isMidrollEligible ? '✅ 8+ Min (Mid-Rolls Active)' : '⚠️ ' + meta.formattedDuration}`;
         spyDurationBadge.className = meta.isMidrollEligible ? 'badge-metric comp-green' : 'badge-metric comp-yellow';
 
         // 2. Competitor Weakness Diagnostic
-        const weaknesses = TjpCompetitorSpy.auditCompetitorWeaknesses(meta.title, meta.description, meta.realTags, meta.durationSeconds, targetTopic);
+        const weaknesses = TjpCompetitorSpy.auditCompetitorWeaknesses(meta.title, meta.description, meta.realTags, meta.durationSeconds);
         weaknessDiagnosticList.innerHTML = weaknesses.map(w => `
           <div class="weakness-card ${w.severity}">
             <span class="weakness-title">${w.type}</span>
@@ -1438,8 +1496,8 @@
 
         // 4. Real Hidden Tags
         renderRealTags(meta.realTags);
-        realTagsSourceBadge.innerText = meta.dataSource === 'manual_view_source' 
-          ? '⚡ View-Source Snippet (100% Offline)' 
+        realTagsSourceBadge.innerText = meta.dataSource === 'direct_source_paste' 
+          ? '⚡ Direct Source Snippet (100% Real)' 
           : meta.dataSource === 'raw_html_scrape' 
           ? 'Page Source (<meta> keyword)' 
           : meta.dataSource === 'open_source_invidious' 
@@ -1474,8 +1532,8 @@
       } catch (err) {
         alert('Failed to inspect video: ' + err.message);
       } finally {
-        btnRunSpy.disabled = false;
-        btnRunSpy.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg> Spy Video`;
+        triggerBtn.disabled = false;
+        triggerBtn.innerHTML = isDirectSource ? '⚡ Parse Source Snippet Offline' : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg> Spy Video`;
       }
     }
 
@@ -1544,7 +1602,8 @@
       alert('Full description copied!');
     });
 
-    btnRunSpy.addEventListener('click', executeSpy);
+    btnRunSpy.addEventListener('click', () => executeSpy(false));
+    btnRunSourceSpy.addEventListener('click', () => executeSpy(true));
 
     /* ==========================================================================
        ADMIN MODAL HANDLERS
