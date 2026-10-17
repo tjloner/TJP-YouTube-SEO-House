@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TJP YouTube SEO Studio | Rank Engine</title>
+
+  <!-- Anti-Cache Directives (Prevents Browser Stale Code Issues) -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>TJP YouTube SEO Studio | Rank Engine Workspace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -54,7 +60,8 @@
       gap: 0.75rem;
       font-weight: 800;
       font-size: 1.15rem;
-      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: #fff;
     }
 
     .brand-pill {
@@ -80,9 +87,6 @@
       background: rgba(56, 189, 248, 0.1);
       color: var(--accent-blue);
       border: 1px solid rgba(56, 189, 248, 0.25);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
     }
 
     .tier-badge.badge-expired {
@@ -145,30 +149,11 @@
       padding-bottom: 0.75rem;
     }
 
-    .panel-header h2 {
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
+    .panel-header h2 { font-size: 1.05rem; font-weight: 700; }
+    .panel-header p { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
 
-    .panel-header p {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    .field-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
     input[type="text"], input[type="number"], select, textarea {
       width: 100%;
@@ -188,12 +173,7 @@
       box-shadow: 0 0 0 3px var(--brand-glow);
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 95px;
-      font-size: 0.85rem;
-      line-height: 1.4;
-    }
+    textarea { resize: vertical; min-height: 95px; font-size: 0.85rem; line-height: 1.4; }
 
     .btn-primary {
       background: var(--brand);
@@ -212,37 +192,12 @@
       box-shadow: 0 4px 18px var(--brand-glow);
     }
 
-    .btn-primary:hover {
-      background: var(--brand-hover);
-    }
+    .btn-primary:hover { background: var(--brand-hover); }
 
-    .dashboard-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .card {
-      background: #0d121c;
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      padding: 1.2rem;
-    }
-
-    .card-title-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.9rem;
-    }
-
-    .card-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
+    .dashboard-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+    .card { background: #0d121c; border: 1px solid var(--panel-border); border-radius: 10px; padding: 1.2rem; }
+    .card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; }
+    .card-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
 
     .copy-btn {
       background: transparent;
@@ -255,10 +210,7 @@
       transition: all 0.15s;
     }
 
-    .copy-btn:hover {
-      border-color: var(--brand);
-      color: #fff;
-    }
+    .copy-btn:hover { border-color: var(--brand); color: #fff; }
 
     .title-item {
       background: #141c2a;
@@ -354,16 +306,43 @@
 
     .danger-notice h3 { color: var(--brand); font-size: 1.1rem; }
     .danger-notice p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--panel-border);
+      padding: 2rem;
+      background: #0a0d14;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.75rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--brand); }
   </style>
 </head>
 <body>
 
   <!-- Top Bar -->
   <header>
-    <div class="brand-logo">
+    <a href="../../index.html" class="brand-logo">
       <span class="brand-pill">TJP</span>
       <span>YouTube SEO Engine</span>
-    </div>
+    </a>
     <div class="header-actions">
       <div id="userTierBadge" class="tier-badge">⏳ Initializing Trial...</div>
       <button class="admin-btn" id="btnOpenAdmin">⚙️ Admin Simulation</button>
@@ -420,9 +399,7 @@ Complete YouTube Automation Guide For Beginners</textarea>
         <span id="execMetric" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">0.0ms</span>
       </div>
 
-      <div id="resultsContainer">
-        <!-- Rendered via Controller -->
-      </div>
+      <div id="resultsContainer"></div>
     </section>
   </main>
 
@@ -437,9 +414,7 @@ Complete YouTube Automation Guide For Beginners</textarea>
         <button class="copy-btn" id="btnCloseAdmin">✕ Close</button>
       </div>
 
-      <div id="adminUserOverview" style="font-family:var(--font-mono); font-size:0.78rem; background:#090d16; padding:0.8rem; border-radius:6px; color:#94a3b8; line-height:1.6;">
-        <!-- Filled dynamically -->
-      </div>
+      <div id="adminUserOverview" style="font-family:var(--font-mono); font-size:0.78rem; background:#090d16; padding:0.8rem; border-radius:6px; color:#94a3b8; line-height:1.6;"></div>
 
       <div class="field-group">
         <label>Admin Override: Extend Trial Duration (Days)</label>
@@ -459,9 +434,20 @@ Complete YouTube Automation Guide For Beginners</textarea>
     </div>
   </div>
 
-  <!-- Controller Script Module -->
+  <!-- Workspace Footer -->
+  <footer>
+    <p>© 2026 TJP YouTube SEO Engine. Built for high-ranking creators.</p>
+    <div class="footer-links">
+      <a href="../../index.html">Landing Page</a>
+      <a href="https://tjpromotions.pro" target="_blank">TJP Promotions</a>
+      <a href="https://tjpromotions.pro/services" target="_blank">Services</a>
+      <a href="https://tjpromotions.pro/contact" target="_blank">Support</a>
+    </div>
+  </footer>
+
+  <!-- Controller Script Module with Cache-Busting Query Version -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.1';
 
     const userTierBadge = document.getElementById('userTierBadge');
     const btnAnalyze = document.getElementById('btnAnalyze');
@@ -607,7 +593,7 @@ Complete YouTube Automation Guide For Beginners</textarea>
       });
     }
 
-    // Admin Panel Controls
+    // Admin Panel Handlers
     btnOpenAdmin.addEventListener('click', () => {
       adminUserOverview.innerHTML = `
         <strong>User ID:</strong> ${currentUser.userId}<br/>
