@@ -268,7 +268,7 @@
       .search-bar-grid, .spy-input-grid { grid-template-columns: 1fr; }
     }
 
-    input[type="text"], input[type="number"], select {
+    input[type="text"], input[type="number"], select, textarea {
       width: 100%;
       background: var(--card-bg);
       border: 1px solid var(--panel-border);
@@ -281,7 +281,7 @@
       transition: border-color 0.2s;
     }
 
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: var(--brand);
       box-shadow: 0 0 0 3px var(--brand-glow);
     }
@@ -881,7 +881,7 @@
                 <strong>How to Spy in 3 Steps:</strong><br/>
                 1. Paste any YouTube video URL or Shorts link.<br/>
                 2. Enter your target topic to spot missing content vacuums.<br/>
-                3. Click "Spy Video" to extract the real hidden tags, audit competitor flaws, and generate outrank counter-titles.
+                3. Click "Spy Video" to extract the real hidden tags, audit competitor flaws, and generate counter-titles.
               </div>
             </div>
           </div>
@@ -900,6 +900,17 @@
           Spy Video
         </button>
       </div>
+
+      <!-- 100% Offline View-Source Drop Box -->
+      <details style="background:#090d16; border:1px solid var(--panel-border); border-radius:8px; padding:0.75rem 1rem;">
+        <summary style="cursor:pointer; color:var(--accent-blue); font-size:0.82rem; font-weight:600;">
+          ⚡ Or Paste Raw View-Source Snippet (100% Offline Mode / Bypass All Network Blocks)
+        </summary>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">
+          If an ISP proxy is ever slow, copy the <code style="color:var(--brand);">name="keyword"</code> line or any HTML from <code style="color:var(--brand);">view-source:</code> and paste it here. It parses in 0.01ms:
+        </p>
+        <textarea id="manualSourceInput" placeholder='Paste HTML or <meta name="keyword" content="tag1, tag2..."> snippet here...' style="margin-top:0.5rem; min-height:75px; font-family:var(--font-mono); font-size:0.78rem;"></textarea>
+      </details>
 
       <!-- Spy Output Dashboard -->
       <div id="spyOutputContainer" style="display:none; display:flex; flex-direction:column; gap:1.5rem;">
@@ -941,7 +952,7 @@
           </div>
         </div>
 
-        <!-- NEW: Competitor Weakness Diagnostic (The Attack Blueprint) -->
+        <!-- Competitor Weakness Diagnostic -->
         <div class="card">
           <div class="card-header">
             <div>
@@ -955,7 +966,7 @@
           <div id="weaknessDiagnosticList" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;"></div>
         </div>
 
-        <!-- NEW: Counter-Title Matrix (Engineered to Out-CTR This Video) -->
+        <!-- Counter-Title Matrix -->
         <div class="card">
           <div class="card-header">
             <div>
@@ -984,7 +995,7 @@
               </div>
             </div>
             <div class="reassurance-banner">
-              🔍 <strong>Source Truth:</strong> These are the exact tags extracted from the video's underlying HTML metadata (<meta name="keywords">). Click any tag to copy it.
+              🔍 <strong>Source Truth:</strong> These are the exact tags extracted from the video's underlying HTML metadata (<meta name="keyword">). Click any tag to copy it.
             </div>
             <div class="tag-chips-container" id="realTagsContainer" style="max-height:260px;"></div>
           </div>
@@ -1157,9 +1168,9 @@
 
   <!-- Scripts: Controller + Studio Modules with Cache-Busting -->
   <script type="module">
-    import { TjpSeoController } from './seo-controller.js?v=1.0.8';
-    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.8';
-    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.8';
+    import { TjpSeoController } from './seo-controller.js?v=1.0.9';
+    import { TjpKeywordResearch } from './modules/keyword-research.js?v=1.0.9';
+    import { TjpCompetitorSpy } from './modules/competitor-spy.js?v=1.0.9';
 
     // Header Session
     const userTierBadge = document.getElementById('userTierBadge');
@@ -1322,10 +1333,11 @@
     btnRunSearch.addEventListener('click', executeSearch);
 
     /* ==========================================================================
-       STUDIO 2 LOGIC (Competitor Video Spy - Pure Intelligence Edition)
+       STUDIO 2 LOGIC (Competitor Video Spy - Pro Edition)
        ========================================================================== */
     const competitorUrlInput = document.getElementById('competitorUrlInput');
     const targetTopicInput = document.getElementById('targetTopicInput');
+    const manualSourceInput = document.getElementById('manualSourceInput');
     const btnRunSpy = document.getElementById('btnRunSpy');
     const spyOutputContainer = document.getElementById('spyOutputContainer');
     const spyThumbImg = document.getElementById('spyThumbImg');
@@ -1365,20 +1377,17 @@
     async function executeSpy() {
       const rawUrl = competitorUrlInput.value.trim();
       const targetTopic = targetTopicInput.value.trim() || 'Stories';
+      const manualSource = manualSourceInput ? manualSourceInput.value.trim() : '';
 
-      if (!rawUrl) return alert('Please enter a YouTube video URL.');
+      if (!rawUrl && !manualSource) return alert('Please enter a YouTube video URL or paste a source snippet.');
 
-      const videoId = TjpCompetitorSpy.extractVideoId(rawUrl);
-      if (!videoId) {
-        alert('⚠️ Invalid YouTube link. Please paste a valid link like https://www.youtube.com/watch?v=... or shorts URL.');
-        return;
-      }
+      const videoId = TjpCompetitorSpy.extractVideoId(rawUrl) || 'custom_source';
 
       btnRunSpy.disabled = true;
       btnRunSpy.innerHTML = '<span>⚡ Reverse-Engineering...</span>';
 
       try {
-        const meta = await TjpCompetitorSpy.inspectCompetitorVideo(videoId);
+        const meta = await TjpCompetitorSpy.inspectCompetitorVideo(videoId, manualSource);
 
         if (!meta.success) {
           alert(`⚠️ ${meta.error}`);
@@ -1388,7 +1397,7 @@
         currentCompetitorData = meta;
         spyOutputContainer.style.display = 'flex';
 
-        // 1. Render Video Profile & Thumbnails
+        // 1. Profile & Thumbnails
         spyThumbImg.src = meta.thumbnailKit.maxres;
         spyThumbImg.onerror = () => { spyThumbImg.src = meta.thumbnailKit.hd; };
         
@@ -1400,7 +1409,7 @@
         spyAuthorName.innerText = meta.authorName;
         spyAuthorLink.href = meta.authorUrl;
 
-        // Duration & Mid-Roll Badge
+        // Exact Duration & Mid-Roll
         spyDurationBadge.innerText = `⏱️ ${meta.formattedDuration} • ${meta.isMidrollEligible ? '✅ 8+ Min (Mid-Rolls Active)' : '⚠️ Under 8 Min'}`;
         spyDurationBadge.className = meta.isMidrollEligible ? 'badge-metric comp-green' : 'badge-metric comp-yellow';
 
@@ -1414,7 +1423,7 @@
           </div>
         `).join('');
 
-        // 3. Counter-Title Matrix
+        // 3. Genre-Smart Counter-Titles
         const counterTitles = TjpCompetitorSpy.generateCounterTitles(meta.title, targetTopic);
         counterTitlesList.innerHTML = counterTitles.map((t, idx) => `
           <div class="counter-title-card">
@@ -1429,13 +1438,15 @@
 
         // 4. Real Hidden Tags
         renderRealTags(meta.realTags);
-        realTagsSourceBadge.innerText = meta.dataSource === 'open_source_invidious' 
-          ? 'Live Invidious Node (100% Real)' 
+        realTagsSourceBadge.innerText = meta.dataSource === 'manual_view_source' 
+          ? '⚡ View-Source Snippet (100% Offline)' 
           : meta.dataSource === 'raw_html_scrape' 
-          ? 'Page Source (<meta> keywords)' 
+          ? 'Page Source (<meta> keyword)' 
+          : meta.dataSource === 'open_source_invidious' 
+          ? 'Live Invidious Node' 
           : 'Extracted Anchors';
 
-        // 5. "Up Next" Infiltration Bridge Tags
+        // 5. Infiltration Bridge Tags
         const infiltration = TjpCompetitorSpy.extractSuggestedVideoAnchors(meta.title, meta.authorName);
         currentBridgeTags = infiltration.suggestedBridgeTags;
         bridgeTagsContainer.innerHTML = currentBridgeTags.map(t => `<span class="tag-chip selected">${t}</span>`).join('');
