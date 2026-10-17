@@ -10,7 +10,7 @@
  *  - Secure Proxy Handshake between Client UI and Backend (tjpromotions.pro)
  */
 
-import { TjpSeoEngine, SeoEngineInput, SeoEngineOutput, EngineResult } from './seo-engine';
+import { TjpSeoEngine, SeoEngineInput, SeoEngineOutput, EngineResult } from './seo-engine.js';
 
 /* ==========================================================================
    1. USER, SUBSCRIPTION & ADMIN DATA SCHEMAS

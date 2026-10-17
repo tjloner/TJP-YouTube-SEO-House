@@ -9,7 +9,7 @@
  *  - Admin Management Interface Contracts (User Approvals, Subscriptions, Overrides)
  *  - Secure Proxy Handshake between Client UI and Backend (tjpromotions.pro)
  */
-import { TjpSeoEngine } from './seo-engine';
+import { TjpSeoEngine } from './seo-engine.js';
 /* ==========================================================================
    2. CONTROLLER BRIDGE IMPLEMENTATION
    ========================================================================== */
